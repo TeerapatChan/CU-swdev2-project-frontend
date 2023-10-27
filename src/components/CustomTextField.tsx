@@ -12,7 +12,7 @@ export default function CustomTextField({ props }: { props: any }) {
           label='Name'
           variant='outlined'
           type='text'
-          error={!!props.errors.`${props.label}`?.message}
+          error={!!props.errors[props.label]?.message}
           helperText={props.name ? props.name?.message : ''}
         />
       )}

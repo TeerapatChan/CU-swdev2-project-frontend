@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova&display=swap');
+
+:root {
+ font-family: 'Ibarra Real Nova', serif;
+};
+
+*{
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  margin-top: 8vh;
+  background-color:#F5F5F5;
+}
