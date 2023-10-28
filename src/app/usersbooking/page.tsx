@@ -6,7 +6,6 @@ export default function UsersBooking() {
       <UserBooking />
       <UserBooking />
       <UserBooking />
-
       <UserBooking />
     </div>
   );
