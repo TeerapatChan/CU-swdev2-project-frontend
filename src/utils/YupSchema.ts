@@ -25,4 +25,15 @@ const LoginYup = yup.object().shape({
   password: yup.string().required(),
 });
 
-export { BookingYup, SignupYup, LoginYup };
+const DentistYup = yup.object().shape({
+  name: yup.string().required(),
+  tel: yup
+    .string()
+    .required('Tel. is required')
+    .matches(PhoneRegex, 'Tel. is not valid'),
+  hospital: yup.string().required(),
+  expertist: yup.string().required(),
+  address: yup.string().required(),
+});
+
+export { BookingYup, SignupYup, LoginYup, DentistYup };

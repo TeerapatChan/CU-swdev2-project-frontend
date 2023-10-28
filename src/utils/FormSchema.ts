@@ -16,4 +16,12 @@ type LoginSchema = {
   password: string;
 };
 
-export type { BookingSchema, SignupSchema, LoginSchema };
+type DentistSchema = {
+  name: string;
+  tel: string;
+  hospital: string;
+  expertist: string;
+  address: string;
+};
+
+export type { BookingSchema, SignupSchema, LoginSchema, DentistSchema };
