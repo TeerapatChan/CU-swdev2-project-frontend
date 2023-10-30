@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import CustomTextField from '../CustomTextField';
 import { LoginSchema } from '@/utils/FormSchema';
+import { signIn } from 'next-auth/react';
 
 export default function SignInForm() {
   const {
@@ -20,8 +21,13 @@ export default function SignInForm() {
     },
   });
 
-  const formSubmit = (data: LoginSchema) => {
-    console.log(data);
+  const formSubmit = async (data: LoginSchema) => {
+    const result = await signIn('credentials', {
+      email: data.email,
+      password: data.password,
+      redirect: true,
+      callbackUrl: '/',
+    });
   };
   return (
     <form
@@ -39,12 +45,12 @@ export default function SignInForm() {
           className='bg-sky-600 w-full'
           size='large'
         >
-          Log In
+          Sign In
         </Button>
         <div className='self-center'>
           Don't have account?
           <Link
-            href='/mock-signup'
+            href='/auth/signup'
             className='text-blue-900 font-medium hover:text-blue-800'
           >
             {' '}

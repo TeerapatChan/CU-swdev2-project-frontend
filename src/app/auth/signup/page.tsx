@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import SignUpForm from '@/components/forms/SignUpForm';
 
-export default function MockSignUpPage() {
+export default function SignUpPage() {
   return (
     <div className="bg-[url('/img/sign-up-background.png')] h-screen bg-cover flex justify-center items-center">
       <div className='w-4/5 h-4/5 bg-white shadow-xl rounded-xl flex flex-row'>

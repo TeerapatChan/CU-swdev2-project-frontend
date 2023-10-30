@@ -1,5 +1,5 @@
 'use client';
-import { TextField } from '@mui/material';
+
 import Button from '@mui/material/Button';
 import Link from 'next/link';
 import { SignupSchema } from '@/utils/FormSchema';
@@ -7,8 +7,11 @@ import { SignupYup } from '@/utils/YupSchema';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import CustomTextField from '../CustomTextField';
+import userSignup from '@/libs/user/userSignup';
+import { useRouter } from 'next/navigation';
 
 export default function SignUpForm() {
+  const router = useRouter();
   const {
     handleSubmit,
     control,
@@ -23,8 +26,19 @@ export default function SignUpForm() {
     },
   });
 
-  const formSubmit = (data: SignupSchema) => {
-    console.log(data);
+  const formSubmit = async (data: SignupSchema) => {
+    try {
+      const result = await userSignup({
+        name: data.name,
+        email: data.email,
+        tel: data.tel,
+        password: data.password,
+      });
+      console.log(data);
+      router.push('/auth/signin');
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <form
@@ -50,11 +64,11 @@ export default function SignUpForm() {
         <div className='self-center'>
           Already have an account?
           <Link
-            href='/mock-signin'
+            href='/auth/signin'
             className='text-blue-900 font-medium hover:text-blue-800'
           >
             {' '}
-            Log in here
+            Sign in here
           </Link>
         </div>
       </div>

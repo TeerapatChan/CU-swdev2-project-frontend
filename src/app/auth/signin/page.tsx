@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import SignInForm from '@/components/forms/SignInForm';
 
-export default function MockSignInPage() {
+export default function SignInPage() {
   return (
     <div className="bg-[url('/img/main-bg.png')] h-screen bg-cover flex justify-center items-center">
       <div className='w-4/5 h-4/5 bg-white shadow-xl rounded-xl flex flex-row'>

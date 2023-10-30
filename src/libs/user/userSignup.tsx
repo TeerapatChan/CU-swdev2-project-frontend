@@ -1,11 +1,15 @@
-export default async function userLogIn({
+export default async function userSignup({
+  name,
   email,
   password,
+  tel,
 }: {
   email: string;
   password: string;
+  name: string;
+  tel: string;
 }) {
-  const response = await fetch('http://localhost:5000/api/v1/auth/login', {
+  const response = await fetch('http://localhost:5000/api/v1/auth/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -13,10 +17,12 @@ export default async function userLogIn({
     body: JSON.stringify({
       email: email,
       password: password,
+      name: name,
+      tel: tel,
     }),
   });
   if (!response.ok) {
-    throw new Error('Failed to login');
+    throw new Error('Failed to register');
   }
   return await response.json();
 }
