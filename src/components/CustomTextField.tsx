@@ -19,6 +19,7 @@ export default function CustomTextField({ props }: { props: any }) {
           }
           size='small'
           fullWidth
+          required
         />
       )}
     />
