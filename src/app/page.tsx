@@ -20,11 +20,15 @@ export default function Home() {
           <div>Your great smile </div>
           <div>begins with</div>
           <div>a great dentist.</div>
-          <div className='text-sm'>"Your Journey to a Brighter, Healthier Smile Starts Here"</div>
+          <div className='text-sm'>
+            "Your Journey to a Brighter, Healthier Smile Starts Here"
+          </div>
           <div className='flex justify-between '>
+            {/* add router link to booking page */}
             <Button variant='contained' className='bg-sky-600 w-6/12 py-2'>
               Book now
             </Button>
+            {/* add router link to About page */}
             <Button variant='outlined' className='border-sky-600 w-5/12 py-2'>
               About
             </Button>
