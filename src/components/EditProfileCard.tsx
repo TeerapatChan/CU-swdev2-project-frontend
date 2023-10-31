@@ -51,7 +51,7 @@ export default function EditProfileCard({params}:{params:{did:string}}){
             <Button variant='contained' className='bg-sky-600 w-[200px] py-2'>
               Edit
             </Button>
-            <Button variant='outlined' color='error' className='w-[200px] py-2'>
+            <Button variant='outlined' color='error' className='w-[200px] py-2 border-2'>
               Delete
             </Button>
           </div>
