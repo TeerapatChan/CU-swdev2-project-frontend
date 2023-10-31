@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import Image from 'next/image';
 export default function ProfileCard({params}:{params:{did:string}}) { 
 // getDentist for image and other info
@@ -11,7 +12,7 @@ const demo = {
     '19 Soi Ekkamai 4 Sukhumvit 63 Rd.Phra Khanong NueaWatthana Bangkok 10110',
 };
 return (
-  <div className='flex flex-col justify-center items-center bg-white w-[800px] h-[600px] justify-center items-center shadow-lg rounded-2xl gap-4'>
+  <div className='flex flex-col justify-center items-center bg-white w-[800px] h-[600px] justify-center items-center shadow-lg rounded-2xl gap-5'>
     <div className='w-[200px] h-[200px] relative'>
       <Image
         src={demo.profilePic}
@@ -22,9 +23,9 @@ return (
       ></Image>
     </div>
     <div className='text-2xl font-semibold'>{demo.name}</div>
-    <div className='w-[550px]'>
+    <div className='flex flex-col w-[550px] gap-8'>
       <hr className=' bg-black h-[2px] border-0'></hr>
-      <div className=' flex flex-col gap-2 text-lg pt-8'>
+      <div className=' flex flex-col gap-2 text-lg '>
         <p className='line-clamp-1'>
           <span className='font-semibold'>Hospital : </span>
           {demo.hospital}
@@ -42,6 +43,9 @@ return (
           {demo.address}
         </p>
       </div>
+      <Button variant='contained' className='bg-sky-600 w-full '>
+        Make an appointment
+      </Button>
     </div>
   </div>
 );

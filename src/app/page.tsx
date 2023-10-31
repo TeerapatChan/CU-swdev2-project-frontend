@@ -23,16 +23,19 @@ export default function Home() {
           <div className='text-sm'>
             "Your Journey to a Brighter, Healthier Smile Starts Here"
           </div>
-          <div className='flex justify-between '>
-            {/* add router link to booking page */}
+          <Button variant='contained' className='bg-sky-600 w-full py-2'>
+            Book now
+          </Button>
+          {/* <div className='flex justify-between '>
+            add router link to booking page
             <Button variant='contained' className='bg-sky-600 w-6/12 py-2'>
               Book now
             </Button>
-            {/* add router link to About page */}
+            add router link to About page
             <Button variant='outlined' className='border-sky-600 w-5/12 py-2'>
               About
             </Button>
-          </div>
+          </div> */}
         </div>
       </div>
     </main>

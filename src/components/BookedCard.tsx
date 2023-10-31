@@ -36,7 +36,7 @@ export default function BookedCard({}){
           <Button variant='contained' className='bg-sky-600 w-full p-2'>
               Edit
             </Button>
-            <Button variant='outlined' color='error' className='w-full p-2'>
+            <Button variant='outlined' color='error' className='w-full p-2 border-2'>
               Delete
             </Button>
            </div> 

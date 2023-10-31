@@ -16,7 +16,7 @@ export default function UserBooking() {
         <Button variant='contained' className='bg-sky-600 w-full'>
           Save
         </Button>
-        <Button variant='outlined' color='error' className='w-full'>
+        <Button variant='outlined' color='error' className='w-full border-2'>
           Delete
         </Button>
       </div>

@@ -2,6 +2,7 @@ import MenuItem from "./MenuItem";
 
 export default function MenuBar() {
 
+
     //state to check if user is logged in use session
     //check user or admin
     return (
@@ -11,11 +12,13 @@ export default function MenuBar() {
         </div>
         <div className='flex flex-row'>
           <MenuItem name='Home' refLink='/'></MenuItem>
-          {/* check user or admin */}
-          <MenuItem name='Dentist' refLink='/dentists-user'></MenuItem>
-          {/* check user or admin */}
-          <MenuItem name='Booking' refLink='/usersbooking'></MenuItem>
-          <MenuItem name='About' refLink='/'></MenuItem>
+          {/* check admin */}
+          <MenuItem name='Dentists' refLink='/dentists-profile-admin'></MenuItem>
+          <MenuItem name='Users Booking' refLink='/usersbooking'></MenuItem>
+          {/* check user  */}
+          <MenuItem name='Booking' refLink='/dentists-profile-user'></MenuItem>
+          
+          <MenuItem name='My Booking' refLink='/mybooking'></MenuItem>
         </div>
         {/* check login or logout */}
         <div className='flex h-full '>
