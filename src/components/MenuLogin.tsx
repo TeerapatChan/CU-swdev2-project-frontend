@@ -13,11 +13,11 @@ return (
     {/* check admin */}
     {profile.data.role == 'admin' ? (
       <div className='flex flex-row'>
-        <MenuItem name='Dentists' refLink='/dentists-profile-admin'></MenuItem>
+        <MenuItem name='Dentists' refLink='/dentists'></MenuItem>
         <MenuItem name='Users Booking' refLink='/usersbooking'></MenuItem>
       </div>
     ) : (
-      <MenuItem name='Booking' refLink='/dentists-profile-user'></MenuItem>
+      <MenuItem name='Booking' refLink='/dentists'></MenuItem>
     )}
   </div>
 );
