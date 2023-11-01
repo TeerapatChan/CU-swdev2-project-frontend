@@ -1,8 +1,14 @@
+import { getServerSession } from "next-auth/next";
 import MenuItem from "./MenuItem";
+import getUserProfile from "@/libs/user/getUserProfile";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import MenuLogin from "./MenuLogin";
 
-export default function MenuBar() {
+export default async function MenuBar() {
 
+  const session = await getServerSession(authOptions);
 
+  
     //state to check if user is logged in use session
     //check user or admin
     return (
@@ -12,18 +18,24 @@ export default function MenuBar() {
         </div>
         <div className='flex flex-row'>
           <MenuItem name='Home' refLink='/'></MenuItem>
-          {/* check admin */}
-          <MenuItem name='Dentists' refLink='/dentists-profile-admin'></MenuItem>
-          <MenuItem name='Users Booking' refLink='/usersbooking'></MenuItem>
-          {/* check user  */}
-          <MenuItem name='Booking' refLink='/dentists-profile-user'></MenuItem>
-          
+          {session ? <MenuLogin></MenuLogin> : (
+              <MenuItem
+                name='Booking'
+                refLink='/dentists-profile-user'
+              ></MenuItem>
+          )}
           <MenuItem name='My Booking' refLink='/mybooking'></MenuItem>
         </div>
         {/* check login or logout */}
-        <div className='flex h-full '>
-          <MenuItem name='Log in' refLink='/mock-signin'></MenuItem>
-        </div>
+        {session ? (
+          <div className='flex h-full '>
+            <MenuItem name={`Log out`} refLink='api/auth/signout'></MenuItem>
+          </div>
+        ) : (
+          <div className='flex h-full '>
+            <MenuItem name='Log in' refLink='auth/signin'></MenuItem>
+          </div>
+        )}
       </div>
     );
 }
