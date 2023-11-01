@@ -1,14 +1,16 @@
 export default async function createDentist({
   name,
-  email,
-  password,
   tel,
+  hospital,
+  address,
+  expertist,
   picture,
 }: {
-  email: string;
-  password: string;
   name: string;
-  tel?: string;
+  tel: string;
+  hospital: string;
+  address: string;
+  expertist: string;
   picture: string;
 }) {
   const response = await fetch('http://localhost:5000/api/v1/dentists', {
@@ -17,10 +19,11 @@ export default async function createDentist({
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      email: email,
-      password: password,
       name: name,
       tel: tel,
+      hospital: hospital,
+      address: address,
+      expertist: expertist,
       picture: picture,
     }),
   });

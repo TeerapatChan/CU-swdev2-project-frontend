@@ -1,9 +1,11 @@
+import { DentistSchema } from '@/utils/FormSchema';
+
 export default async function updateDentist({
   id,
   updatedData,
 }: {
   id: string;
-  updatedData: object;
+  updatedData: DentistSchema;
 }) {
   const response = await fetch(`http://localhost:5000/api/v1/dentists/${id}`, {
     method: 'PUT',

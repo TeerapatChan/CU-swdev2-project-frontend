@@ -2,6 +2,10 @@ import TextField from '@mui/material/TextField';
 import { Controller } from 'react-hook-form';
 
 export default function CustomTextField({ props }: { props: any }) {
+  var required = true;
+  if (props.page === 'createDentist') {
+    required = false;
+  }
   return (
     <Controller
       name={props.label}
@@ -19,7 +23,7 @@ export default function CustomTextField({ props }: { props: any }) {
           }
           size='small'
           fullWidth
-          required
+          required={required}
         />
       )}
     />
