@@ -14,7 +14,7 @@ export default function DentistWithEditCard({
     // dont for get to add link to dentist profile
     <div className='flex flex-col h-[320px] w-[320px] justify-center items-center shadow-md rounded-lg bg-white gap-2'>
       <button className='relative w-full h-fit bottom-5'>
-        <DeleteIcon className='absolute right-4 top-0 z-50 text-3xl' />
+        <DeleteIcon className='absolute right-4 top-0 text-3xl' />
       </button>
       <div className='w-1/3 h-1/3 relative'>
         <Image
