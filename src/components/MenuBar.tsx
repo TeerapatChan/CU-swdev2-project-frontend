@@ -21,7 +21,7 @@ export default async function MenuBar() {
           {session ? <MenuLogin></MenuLogin> : (
               <MenuItem
                 name='Booking'
-                refLink='/dentists-profile-user'
+                refLink='/dentists'
               ></MenuItem>
           )}
           <MenuItem name='My Booking' refLink='/mybooking'></MenuItem>
