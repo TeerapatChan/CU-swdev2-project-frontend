@@ -29,11 +29,11 @@ export default async function MenuBar() {
         {/* check login or logout */}
         {session ? (
           <div className='flex h-full '>
-            <MenuItem name={`Log out`} refLink='api/auth/signout'></MenuItem>
+            <MenuItem name={`Log out`} refLink='/api/auth/signout'></MenuItem>
           </div>
         ) : (
           <div className='flex h-full '>
-            <MenuItem name='Log in' refLink='auth/signin'></MenuItem>
+            <MenuItem name='Log in' refLink='/auth/signin'></MenuItem>
           </div>
         )}
       </div>

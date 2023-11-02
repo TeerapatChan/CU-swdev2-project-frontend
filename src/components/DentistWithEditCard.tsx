@@ -1,15 +1,21 @@
+'use client';
 import Image from 'next/image';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Button } from '@mui/material';
+import { useRouter } from 'next/navigation';
+
 export default function DentistWithEditCard({
   profilePic,
   name,
-  hospital,
+  hospital,id
 }: {
   profilePic: string;
   name: string;
   hospital: string;
+  id:string
 }) {
+  const router = useRouter();
+
   return (
     // dont for get to add link to dentist profile
     <div className='flex flex-col h-[320px] w-[320px] justify-center items-center shadow-md rounded-lg bg-white gap-2'>
@@ -31,10 +37,20 @@ export default function DentistWithEditCard({
         <p className='text-lg'>{hospital}</p>
       </div>
       <div className='flex gap-5 w-[200px] h-[33px]'>
-        <Button variant='contained' className='bg-sky-600 w-full'>
+        <Button
+          variant='contained'
+          className='bg-sky-600 w-full'
+          onClick={() => {
+            router.push(`/dentists/edit/${id}`);
+          }}
+        >
           Edit
         </Button>
-        <Button variant='outlined' className='border-sky-600 w-full border-2'>
+        <Button
+          variant='outlined'
+          className='border-sky-600 w-full border-2'
+          onClick={() => {router.push(`/dentists/${id}`)}}
+        >
           View
         </Button>
       </div>

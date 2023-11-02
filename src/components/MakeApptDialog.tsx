@@ -9,7 +9,7 @@ export default function MakeApptDialog({ dentists }: { dentists: any }) {
   const handleClose = () => setOpen(false);
   return (
     <>
-      <Button variant='contained' className='bg-blue-600' onClick={handleOpen}>
+      <Button variant='contained' className='bg-sky-600 w-full 'onClick={handleOpen}>
         Make an appointment
       </Button>
       <MakeApptPopup open={open} onClose={handleClose} dentists={dentists} />
