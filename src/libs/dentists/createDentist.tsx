@@ -5,6 +5,7 @@ export default async function createDentist({
   address,
   expertist,
   picture,
+  token,
 }: {
   name: string;
   tel: string;
@@ -12,11 +13,13 @@ export default async function createDentist({
   address: string;
   expertist: string;
   picture: string;
+  token: string;
 }) {
   const response = await fetch('http://localhost:5000/api/v1/dentists', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       name: name,
