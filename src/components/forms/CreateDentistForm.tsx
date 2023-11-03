@@ -10,8 +10,18 @@ import { DentistYup } from '@/utils/YupSchema';
 import createDentist from '@/libs/dentists/createDentist';
 import { useRouter } from 'next/navigation';
 
+<<<<<<< Updated upstream:src/components/forms/CreateDentistForm.tsx
 export default function CreateDentistForm() {
   const mockImg = '/img/user.png';
+||||||| Stash base:src/components/forms/CreateDentist/CreateDentistForm.tsx
+export default function CreateDentistForm({ token }: { token: string }) {
+  const mockImg = '/img/user.png';
+  const [selectedImage, setSelectedImage] = useState<File>();
+  const [url, setUrl] = useState<string>('');
+=======
+export default function CreateDentistForm({ token }: { token: string }) {
+  const [selectedImage, setSelectedImage] = useState<File>();
+>>>>>>> Stashed changes:src/components/forms/CreateDentist/CreateDentistForm.tsx
   const router = useRouter();
   const {
     handleSubmit,
@@ -37,7 +47,15 @@ export default function CreateDentistForm() {
         hospital: data.hospital,
         address: data.address,
         expertist: data.expertist,
+<<<<<<< Updated upstream:src/components/forms/CreateDentistForm.tsx
         picture: '',
+||||||| Stash base:src/components/forms/CreateDentist/CreateDentistForm.tsx
+        picture: url,
+        token: token,
+=======
+        picture: '/img/user.png',
+        token: token,
+>>>>>>> Stashed changes:src/components/forms/CreateDentist/CreateDentistForm.tsx
       });
       console.log(data);
     } catch (error) {
