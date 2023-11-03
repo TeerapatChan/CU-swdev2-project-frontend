@@ -8,7 +8,7 @@ export default async function createDentist({
   token,
 }: {
   name: string;
-  tel: string;
+  tel?: string;
   hospital: string;
   address: string;
   expertist: string;
