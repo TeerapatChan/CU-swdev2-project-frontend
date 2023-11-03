@@ -4,17 +4,20 @@ export default async function createDentist({
   password,
   tel,
   picture,
+  token,
 }: {
   email: string;
   password: string;
   name: string;
   tel?: string;
   picture: string;
+  token: string;
 }) {
   const response = await fetch('http://localhost:5000/api/v1/dentists', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       email: email,
