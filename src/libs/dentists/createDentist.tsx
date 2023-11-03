@@ -1,15 +1,17 @@
 export default async function createDentist({
   name,
-  email,
-  password,
   tel,
+  hospital,
+  address,
+  expertist,
   picture,
   token,
 }: {
-  email: string;
-  password: string;
   name: string;
   tel?: string;
+  hospital: string;
+  address: string;
+  expertist: string;
   picture: string;
   token: string;
 }) {
@@ -20,11 +22,12 @@ export default async function createDentist({
       authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      email: email,
-      password: password,
       name: name,
       tel: tel,
       picture: picture,
+      hospital: hospital,
+      address: address,
+      expertist: expertist,
     }),
   });
   if (!response.ok) {
