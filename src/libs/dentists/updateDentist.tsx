@@ -5,7 +5,21 @@ export default async function updateDentist({
   updatedData,
 }: {
   id: string;
+<<<<<<< Updated upstream
   updatedData: DentistSchema;
+||||||| Stash base
+<<<<<<< Updated upstream
+  updatedData: object;
+||||||| Stash base
+  updatedData: DentistSchema;
+=======
+  updatedData: DentistSchema;
+  token: string;
+>>>>>>> Stashed changes
+=======
+  updatedData: DentistSchema;
+  token: string;
+>>>>>>> Stashed changes
 }) {
   const response = await fetch(`http://localhost:5000/api/v1/dentists/${id}`, {
     method: 'PUT',
