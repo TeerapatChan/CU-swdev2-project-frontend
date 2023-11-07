@@ -1,9 +1,12 @@
-
+"use client"
 import Image from 'next/image';
-export default function DentistCard({profilePic, name, hospital}:{profilePic:string, name:string, hospital:string}) {
+import { useRouter } from 'next/navigation';
+export default function DentistCard({profilePic, name, hospital,id}:{profilePic:string, name:string, hospital:string,id:string}) {
+
+  const router = useRouter();
 return (
   // dont for get to add link to dentist profile
-  <button className='flex flex-col h-[320px] w-[320px] justify-center items-center shadow-md rounded-lg gap-4 bg-white'>
+  <button className='flex flex-col h-[320px] w-[320px] justify-center items-center shadow-md rounded-lg gap-4 bg-white hover:shadow-xl' onClick={() => {router.push(`/dentists/${id}`)}}>
     <div className='w-1/3 h-1/3 relative'>
       <Image
         src={profilePic}

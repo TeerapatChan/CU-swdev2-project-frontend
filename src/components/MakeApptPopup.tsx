@@ -2,7 +2,8 @@
 import { Dialog, DialogTitle, Button } from '@mui/material';
 import DateDentist from './DateDentist';
 import { useState, useEffect } from 'react';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import { dentistsProps } from '@/utils/interface';
 
 export default function MakeApptPopup({
   open,
@@ -11,9 +12,10 @@ export default function MakeApptPopup({
 }: {
   open: boolean;
   onClose?: () => void;
-  dentists: any;
+  dentists:dentistsProps ;
 }) {
-  const [date, setDate] = useState<Dayjs | null>(null);
+  var now = dayjs();
+  const [date, setDate] = useState<Dayjs>(now);
   const [dentist, setDentist] = useState<string>('Select Dentist');
   return (
     <Dialog open={open} onClose={onClose}>
@@ -25,6 +27,7 @@ export default function MakeApptPopup({
           onDateChange={(e) => setDate(e)}
           onDentistChange={(e) => setDentist(e)}
           dentists={dentists}
+          defaultDate={now}
         />
         <Button variant='contained' className='bg-sky-600 w-full'>
           Submit
