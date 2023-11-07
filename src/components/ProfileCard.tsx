@@ -1,9 +1,10 @@
 import getDentist from '@/libs/dentists/getDentist';
-import { Button } from '@mui/material';
 import Image from 'next/image';
 import MakeApptDialog from './MakeApptDialog';
+import getDentists from '@/libs/dentists/getDentists';
 export default async function ProfileCard({params}:{params:{id:string}}) { 
 // getDentist for image and other info
+const dentists = (await getDentists()).data;
 const Detail = await getDentist(params.id);
 const dentistDetail = Detail.data;
 return (
@@ -38,7 +39,7 @@ return (
           {dentistDetail.address}
         </p>
         {/* not finished yet */}
-        <MakeApptDialog dentists={params}></MakeApptDialog>
+        <MakeApptDialog defaultDentist={dentistDetail.id} dentists={dentists} ></MakeApptDialog>
       </div>
     </div>
   </div>

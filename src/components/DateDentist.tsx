@@ -3,23 +3,28 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import { useState, useEffect } from 'react';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import { MenuItem } from '@mui/material';
+import { dentistsProps } from '@/utils/interface';
 
 export default function DateDentist({
   onDateChange,
   onDentistChange,
   dentists,
+  defaultDate
 }: {
   onDateChange: (date: any) => void;
   onDentistChange: (dentist: string) => void;
-  dentists: any;
+  dentists:dentistsProps;
+  defaultDate:Dayjs
 }) {
-  const [date, setDate] = useState<Dayjs | null>(null);
-  const [dentist, setDentist] = useState('BKK');
+  const [date, setDate] = useState<Dayjs>(dayjs(defaultDate));
+  const [dentist, setDentist] = useState<string>(dentists.defaultDentist);
+  // console.log(defaultDate)
+  // console.log(dentist)
   return (
     <>
       <div className='w-full flex flex-row gap-10 justify-between mb-2'>
@@ -27,12 +32,15 @@ export default function DateDentist({
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             label='DD/MM/YYYY'
+            format='DD/MM/YYYY'
             value={date}
             slotProps={{ textField: { size: 'small', required: true } }}
             className='w-full bg-white'
             onChange={(e) => {
-              setDate(e);
-              onDateChange(e);
+              if (e) {
+                setDate(e);
+                onDateChange(e);
+              }
             }}
           />
         </LocalizationProvider>
@@ -55,9 +63,9 @@ export default function DateDentist({
               onDentistChange(e.target.value);
             }}
           >
-            {dentist &&
-              dentists.map((dentist: any) => (
-                <MenuItem value={dentist.name}>{dentist.name}</MenuItem>
+            {dentists &&
+              dentists.dentists.map((dentist: any) => (
+                <MenuItem value={dentist.id}>{dentist.name}</MenuItem>
               ))}
           </Select>
         </FormControl>

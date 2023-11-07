@@ -2,8 +2,10 @@
 import MakeApptPopup from '@/components/MakeApptPopup';
 import { useState } from 'react';
 import { Button } from '@mui/material';
+import { dentistsProps } from '@/utils/interface';
 
-export default function MakeApptDialog({ dentists }: { dentists: any }) {
+
+export default function MakeApptDialog(dentists: dentistsProps) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
