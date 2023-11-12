@@ -11,12 +11,14 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import CreateDentistInput from './CreateDentistInput';
 import CreateDentistImage from './CreateDentistImage';
+import { useEdgeStore } from '@/libs/edgestore';
 
 export default function CreateDentistForm({ token }: { token: string }) {
-  const mockImg = '/img/user.png';
   const [selectedImage, setSelectedImage] = useState<File>();
-  const [url, setUrl] = useState<string>('');
+  var url = '';
   const router = useRouter();
+  const { edgestore } = useEdgeStore();
+
   const {
     handleSubmit,
     control,
@@ -34,7 +36,13 @@ export default function CreateDentistForm({ token }: { token: string }) {
 
   const formSubmit = async (data: DentistSchema) => {
     try {
-      const result = await createDentist({
+      if (selectedImage) {
+        const res = await edgestore.publicFiles.upload({
+          file: selectedImage,
+        });
+        url = res.url;
+      }
+      const res = await createDentist({
         name: data.name,
         tel: data.tel,
         hospital: data.hospital,
@@ -43,6 +51,7 @@ export default function CreateDentistForm({ token }: { token: string }) {
         picture: url,
         token: token,
       });
+
       console.log(data);
       router.push('/');
     } catch (error) {

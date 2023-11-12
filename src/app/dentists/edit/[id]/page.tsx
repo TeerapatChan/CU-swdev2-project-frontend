@@ -1,4 +1,3 @@
-
 import EditDentistForm from '@/components/forms/EditDentist/EditDentistForm';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
@@ -15,8 +14,8 @@ export default async function EditDentistPage({
   const profile = (await getUserProfile(session.user.token)).data;
   if (profile.role !== 'admin') return null;
   const id = params.id;
-  const dentist = (await getDentist({ id })).data;
-
+  const dentist = (await getDentist(id)).data;
+  const picture = dentist.picture;
   const defaultValues = {
     name: dentist.name,
     tel: dentist.tel,
@@ -30,7 +29,7 @@ export default async function EditDentistPage({
     <div className="bg-[url('/img/main-bg.png')] h-[120vh] bg-cover flex justify-center items-center">
       <EditDentistForm
         defaultValues={defaultValues}
-        picture='/img/user.png'
+        picture={picture}
         token={session.user.token}
         id={id}
       />
