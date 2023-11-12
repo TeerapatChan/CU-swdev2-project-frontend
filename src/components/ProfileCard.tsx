@@ -8,7 +8,7 @@ const dentists = (await getDentists()).data;
 const Detail = await getDentist(params.id);
 const dentistDetail = Detail.data;
 return (
-  <div className='flex flex-col justify-center items-center bg-white w-[800px] h-[600px] justify-center items-center shadow-lg rounded-2xl gap-5'>
+  <div className='flex flex-col bg-white w-[800px] h-[600px] justify-center items-center shadow-lg rounded-2xl gap-5'>
     <div className='w-[200px] h-[200px] relative'>
       <Image
         src={dentistDetail.picture}
