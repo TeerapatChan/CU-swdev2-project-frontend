@@ -8,6 +8,8 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import EditDentistInput from './EditDentistInput';
 import EditDentistImage from './EditDentistImage';
+import { useEdgeStore } from '@/libs/edgestore';
+import updateDentist from '@/libs/dentists/updateDentist';
 
 export default function EditDentistForm({
   defaultValues,
@@ -20,9 +22,10 @@ export default function EditDentistForm({
   token: string;
   id: string;
 }) {
-  const mockImg = '/img/user.png';
   const [selectedImage, setSelectedImage] = useState<File>();
   const router = useRouter();
+  const { edgestore } = useEdgeStore();
+
   const {
     handleSubmit,
     control,
@@ -36,6 +39,28 @@ export default function EditDentistForm({
 
   const formSubmit = async (data: DentistSchema) => {
     try {
+      if (selectedImage) {
+        const res = await edgestore.publicFiles.upload({
+          file: selectedImage,
+          options: {
+            replaceTargetUrl: picture,
+          },
+        });
+        picture = res.url;
+      }
+      const res = await updateDentist({
+        id: id,
+        updatedData: {
+          name: data.name,
+          tel: data.tel,
+          hospital: data.hospital,
+          address: data.address,
+          expertist: data.expertist,
+        },
+        picture: picture,
+        token: token,
+      });
+      console.log(selectedImage);
       console.log(data);
       router.push('/');
     } catch (error) {

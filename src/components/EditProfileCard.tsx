@@ -14,7 +14,7 @@ export default function EditProfileCard({params}:{params:{did:string}}){
         '19 Soi Ekkamai 4 Sukhumvit 63 Rd.Phra Khanong NueaWatthana Bangkok 10110',
     };
     return (
-      <div className='flex flex-col justify-center items-center bg-white w-[800px] h-[600px] justify-center items-center shadow-lg rounded-2xl gap-4'>
+      <div className='flex flex-col bg-white w-[800px] h-[600px] justify-center items-center shadow-lg rounded-2xl gap-4'>
         <div className='w-[200px] h-[200px] relative'>
           <Image
             src={demo.profilePic}
