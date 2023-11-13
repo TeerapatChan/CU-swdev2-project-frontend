@@ -23,14 +23,18 @@ export default async function BookedCard(){
       </div>
     );
   const bookingDetails = bookings.data;
-  const adminBooking = bookings.data.filter((booking:BookingItem)=>booking.user==profile.data._id)
-  // console.log(adminBooking);
-  if (adminBooking.length < 1)
-    return (
-      <div className='flex justify-center items-center bg-white w-[800px] h-[200px] shadow-lg rounded-2xl text-4xl text-[#777777]'>
-        No Appointment
-      </div>
-    );
+  const adminBooking = bookings.data.filter(
+    (booking: BookingItem) => booking.user._id == profile.data._id,
+  );
+  if(profile.data.role == 'admin'){
+    // console.log(adminBooking);
+    if (adminBooking.length < 1)
+      return (
+        <div className='flex justify-center items-center bg-white w-[800px] h-[200px] shadow-lg rounded-2xl text-4xl text-[#777777]'>
+          No Appointment
+        </div>
+      );
+  }
   // console.log(bookings);
   
   

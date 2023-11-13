@@ -2,10 +2,17 @@ import { Dayjs } from "dayjs"
 
 type BookingItem ={
     bookingDate: Dayjs
-    user: string
+    user: UserDetail
     dentist: DentistDetail
     createdAt: string
 }
+
+type UserDetail = {
+  _id: string
+  name: string
+  email: string
+  tel: string
+};
 
 type DentistDetail = {
   _id: string;

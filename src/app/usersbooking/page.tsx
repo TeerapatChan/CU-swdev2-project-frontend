@@ -25,7 +25,7 @@ export default async function UsersBooking() {
   return (
     <div className='bg-[#f3f3f3f3] h-100% flex flex-col justify-center items-center gap-8 p-8'>
       { 
-        bookings.map((booking:BookingItem)=><UserBooking bookingDate={dayjs(booking.bookingDate)} userId={booking.user} dentists={{defaultDentist:booking.dentist.id,dentists:dentists}} />)}
+        bookings.map((booking:BookingItem)=><UserBooking bookingDate={dayjs(booking.bookingDate)} userId={booking.user.name} dentists={{defaultDentist:booking.dentist.id,dentists:dentists}} />)}
 
     </div>
   );

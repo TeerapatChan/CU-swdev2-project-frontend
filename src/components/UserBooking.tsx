@@ -22,7 +22,7 @@ export default function UserBooking(props: UserBookingProps) {
     rounded-lg shadow-lg'
     >
       <div className='text-2xl font-semibold flex flex-row gap-2'>
-        <p>Patient ID:</p>
+        <p>Patient :</p>
         <p>{userId}</p>
       </div>
       <DateDentist
