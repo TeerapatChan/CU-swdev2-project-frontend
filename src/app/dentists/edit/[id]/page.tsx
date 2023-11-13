@@ -13,9 +13,11 @@ export default async function EditDentistPage({
   if (!session || !session.user.token) return null;
   const profile = (await getUserProfile(session.user.token)).data;
   if (profile.role !== 'admin') return null;
+
   const id = params.id;
   const dentist = (await getDentist(id)).data;
   const picture = dentist.picture;
+
   const defaultValues = {
     name: dentist.name,
     tel: dentist.tel,
@@ -31,7 +33,7 @@ export default async function EditDentistPage({
         defaultValues={defaultValues}
         picture={picture}
         token={session.user.token}
-        id={id}
+        id={params.id}
       />
     </div>
   );

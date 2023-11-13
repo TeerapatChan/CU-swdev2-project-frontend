@@ -8,6 +8,13 @@ type BookingItem = {
   createdAt: string;
 };
 
+type UserDetail = {
+  _id: string
+  name: string
+  email: string
+  tel: string
+};
+
 type DentistDetail = {
   _id: string;
   name: string;
