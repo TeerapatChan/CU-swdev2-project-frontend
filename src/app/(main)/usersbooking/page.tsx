@@ -1,5 +1,5 @@
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../api/auth/[...nextauth]/route';
+import { authOptions } from '../../api/auth/[...nextauth]/route';
 import UserBooking from '@/components/UserBooking';
 import getBookings from '@/libs/bookings/getBookings';
 import { BookingItem, DentistDetail } from '@/utils/interface';
@@ -10,7 +10,7 @@ export default async function UsersBooking() {
   const session = await getServerSession(authOptions);
   if (!session || !session.user.token)
     return (
-      <div className='flex justify-center items-center bg-[url("/img/background.png")] bg-cover w-[800px] h-[200px] shadow-lg rounded-2xl text-4xl text-[#777777]'>
+      <div className='mt-[8vh] flex justify-center items-center bg-[url("/img/background.png")] bg-cover w-[800px] h-[200px] shadow-lg rounded-2xl text-4xl text-[#777777]'>
         Please Login First
       </div>
     );
@@ -18,7 +18,7 @@ export default async function UsersBooking() {
   const dentists: DentistDetail[] = (await getDentists()).data;
 
   return (
-    <div className='bg-[url("/img/background.png")] bg-cover h-100% flex flex-col justify-center items-center gap-8 p-8'>
+    <div className='mt-[8vh] bg-[url("/img/background.png")] bg-cover h-100% flex flex-col justify-center items-center gap-8 p-8'>
       {bookings.map((booking: BookingItem) => (
         <UserBooking
           bookingDate={dayjs(booking.bookingDate)}

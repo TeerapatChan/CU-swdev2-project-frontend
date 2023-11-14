@@ -28,7 +28,7 @@ export default async function EditDentistPage({
   console.log(dentist);
 
   return (
-    <div className="bg-[url('/img/main-bg.png')] h-[120vh] bg-cover flex justify-center items-center">
+    <div className="mt-[8vh] bg-[url('/img/main-bg.png')] h-[120vh] bg-cover flex justify-center items-center">
       <EditDentistForm
         defaultValues={defaultValues}
         picture={picture}

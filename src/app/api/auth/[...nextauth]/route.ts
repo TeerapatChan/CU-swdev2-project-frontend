@@ -1,15 +1,15 @@
-import NextAuth from "next-auth";
-import { AuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import userSignin from "@/libs/user/userSignin";
+import NextAuth from 'next-auth';
+import { AuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import userSignin from '@/libs/user/userSignin';
 
 export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
-        email: { label: "Email", type: "text", placeholder: "email" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'Email', type: 'text', placeholder: 'email' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials, req) {
         if (!credentials) return null;
@@ -23,18 +23,18 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
-  session: { strategy: "jwt" }, 
+  session: { strategy: 'jwt' },
   callbacks: {
-    async jwt({token,user}) {
-      return {...token, ...user}
+    async jwt({ token, user }) {
+      return { ...token, ...user };
     },
     async session({ session, token, user }) {
       session.user = token as any;
       return session;
-    }
+    },
   },
   pages: {
-    signIn: "/auth/signin",
+    signIn: '/signin',
   },
 };
 
