@@ -16,6 +16,7 @@ export default async function UsersBooking() {
     );
   const bookings = (await getBookings(session.user.token)).data;
   const dentists: DentistDetail[] = (await getDentists()).data;
+
   // for (let i=0 ; i<bookings.length ; i++ ){
   //   // console.log(bookings[i].bookingDate);
   //   const date = dayjs(bookings[i].bookingDate)
@@ -27,9 +28,10 @@ export default async function UsersBooking() {
       {bookings.map((booking: BookingItem) => (
         <UserBooking
           bookingDate={dayjs(booking.bookingDate)}
-          user={booking.user.name}
+          patientName={booking.user.name}
           dentists={{ defaultDentist: booking.dentist.id, dentists: dentists }}
-          key={booking._id}
+          id={booking._id ? booking._id : ''}
+          token={session.user.token}
         />
       ))}
     </div>
