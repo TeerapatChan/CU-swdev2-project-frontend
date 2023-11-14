@@ -14,12 +14,12 @@ export default function DateDentist({
   onDateChange,
   onDentistChange,
   dentists,
-  defaultDate
+  defaultDate,
 }: {
   onDateChange: (date: any) => void;
   onDentistChange: (dentist: string) => void;
-  dentists:dentistsProps;
-  defaultDate:Dayjs
+  dentists: dentistsProps;
+  defaultDate: Dayjs;
 }) {
   const [date, setDate] = useState<Dayjs>(dayjs(defaultDate));
   const [dentist, setDentist] = useState<string>(dentists.defaultDentist);

@@ -10,7 +10,6 @@ export default function EditDentistImage({
   selectedImage: File | undefined;
   defaultImage: string;
 }) {
-  const mockImg = '/img/user.png';
   return (
     <>
       <div className='relative w-[160px] h-[160px] self-center mt-5 p-2'>
@@ -37,7 +36,6 @@ export default function EditDentistImage({
             onChange={(e: any) => {
               setSelectedImage(e.target.files[0]);
             }}
-            required
           />
         </div>
       </div>

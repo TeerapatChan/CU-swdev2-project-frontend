@@ -1,7 +1,6 @@
 'use client';
 import Button from '@mui/material/Button';
 import Image from 'next/image';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DentistSchema } from '@/utils/FormSchema';
@@ -12,17 +11,21 @@ import { useState } from 'react';
 import CreateDentistInput from './CreateDentistInput';
 import CreateDentistImage from './CreateDentistImage';
 import { useEdgeStore } from '@/libs/edgestore';
+import Status from '@/components/Status';
+import toast from 'react-hot-toast';
 
 export default function CreateDentistForm({ token }: { token: string }) {
   const [selectedImage, setSelectedImage] = useState<File>();
   var url = '';
   const router = useRouter();
   const { edgestore } = useEdgeStore();
+  const notify = () => toast.success('Dentist Created');
 
   const {
     handleSubmit,
     control,
     formState: { errors },
+    reset,
   } = useForm<DentistSchema>({
     resolver: yupResolver(DentistYup),
     defaultValues: {
@@ -51,9 +54,16 @@ export default function CreateDentistForm({ token }: { token: string }) {
         picture: url,
         token: token,
       });
-
+      notify();
+      reset({
+        name: '',
+        tel: '',
+        hospital: '',
+        address: '',
+        expertist: '',
+      });
+      setSelectedImage(undefined);
       console.log(data);
-      router.push('/');
     } catch (error) {
       console.log(error);
     }
@@ -65,6 +75,7 @@ export default function CreateDentistForm({ token }: { token: string }) {
     bg-white rounded-lg pr-24 pl-24 pb-5 mt-10 mb-10'
       onSubmit={handleSubmit(formSubmit)}
     >
+      <Status />
       <CreateDentistImage
         setSelectedImage={setSelectedImage}
         selectedImage={selectedImage}

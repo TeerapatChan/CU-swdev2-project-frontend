@@ -10,6 +10,8 @@ import EditDentistInput from './EditDentistInput';
 import EditDentistImage from './EditDentistImage';
 import { useEdgeStore } from '@/libs/edgestore';
 import updateDentist from '@/libs/dentists/updateDentist';
+import toast from 'react-hot-toast';
+import Status from '@/components/Status';
 
 export default function EditDentistForm({
   defaultValues,
@@ -25,6 +27,7 @@ export default function EditDentistForm({
   const [selectedImage, setSelectedImage] = useState<File>();
   const router = useRouter();
   const { edgestore } = useEdgeStore();
+  const notify = () => toast.success('Update success');
 
   const {
     handleSubmit,
@@ -60,9 +63,9 @@ export default function EditDentistForm({
         picture: picture,
         token: token,
       });
+      notify();
       console.log(selectedImage);
       console.log(data);
-      router.push('/');
     } catch (error) {
       console.log(error);
     }
@@ -74,6 +77,7 @@ export default function EditDentistForm({
     bg-white rounded-lg pr-24 pl-24 pb-5 mt-10 mb-10'
       onSubmit={handleSubmit(formSubmit)}
     >
+      <Status />
       <EditDentistImage
         setSelectedImage={setSelectedImage}
         selectedImage={selectedImage}
