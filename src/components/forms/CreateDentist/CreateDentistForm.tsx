@@ -13,13 +13,15 @@ import CreateDentistImage from './CreateDentistImage';
 import { useEdgeStore } from '@/libs/edgestore';
 import Status from '@/components/Status';
 import toast from 'react-hot-toast';
+import BackIcon from '@/components/BackIcon';
 
 export default function CreateDentistForm({ token }: { token: string }) {
   const [selectedImage, setSelectedImage] = useState<File>();
   var url = '';
   const router = useRouter();
   const { edgestore } = useEdgeStore();
-  const notify = () => toast.success('Dentist Created');
+  const success = () => toast.success('Dentist Created');
+  const fail = () => toast.error('Dentist Creation Failed');
 
   const {
     handleSubmit,
@@ -54,7 +56,7 @@ export default function CreateDentistForm({ token }: { token: string }) {
         picture: url,
         token: token,
       });
-      notify();
+      success();
       reset({
         name: '',
         tel: '',
@@ -65,6 +67,7 @@ export default function CreateDentistForm({ token }: { token: string }) {
       setSelectedImage(undefined);
       console.log(data);
     } catch (error) {
+      fail();
       console.log(error);
     }
   };
@@ -72,10 +75,11 @@ export default function CreateDentistForm({ token }: { token: string }) {
   return (
     <form
       className='w-[700px] h-[800px] flex flex-col gap-2 items-start justify-center 
-    bg-white rounded-lg pr-24 pl-24 pb-5 mt-10 mb-10'
+    bg-white rounded-lg pr-24 pl-24 pb-5 mt-10 mb-10 relative'
       onSubmit={handleSubmit(formSubmit)}
     >
       <Status />
+      <BackIcon />
       <CreateDentistImage
         setSelectedImage={setSelectedImage}
         selectedImage={selectedImage}

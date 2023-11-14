@@ -12,6 +12,7 @@ import { useEdgeStore } from '@/libs/edgestore';
 import updateDentist from '@/libs/dentists/updateDentist';
 import toast from 'react-hot-toast';
 import Status from '@/components/Status';
+import BackIcon from '@/components/BackIcon';
 
 export default function EditDentistForm({
   defaultValues,
@@ -74,10 +75,11 @@ export default function EditDentistForm({
   return (
     <form
       className='w-[700px] h-[800px] flex flex-col gap-2 items-start justify-center 
-    bg-white rounded-lg pr-24 pl-24 pb-5 mt-10 mb-10'
+    bg-white rounded-lg pr-24 pl-24 pb-5 mt-10 mb-10 relative'
       onSubmit={handleSubmit(formSubmit)}
     >
       <Status />
+      <BackIcon />
       <EditDentistImage
         setSelectedImage={setSelectedImage}
         selectedImage={selectedImage}
