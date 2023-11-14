@@ -1,6 +1,16 @@
-export default async function deleteBooking({ id }: { id: string }) {
+export default async function deleteBooking({
+  id,
+  token,
+}: {
+  id: string;
+  token: string;
+}) {
   const response = await fetch(`http://localhost:5000/api/v1/bookings/${id}`, {
     method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+    },
   });
 
   if (!response.ok) {
