@@ -1,5 +1,3 @@
-import { Dayjs } from 'dayjs';
-
 export default async function updateBooking({
   id,
   dentist,
@@ -8,7 +6,7 @@ export default async function updateBooking({
 }: {
   id: string;
   dentist: string;
-  bookingDate: Dayjs;
+  bookingDate: Date;
   token: string;
 }) {
   const response = await fetch(`http://localhost:5000/api/v1/bookings/${id}`, {

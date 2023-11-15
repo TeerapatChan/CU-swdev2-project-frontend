@@ -6,9 +6,14 @@ import { Button } from '@mui/material';
 import dayjs from 'dayjs';
 import { getServerSession } from 'next-auth';
 import BackIcon from './BackIcon';
+import EditDialog from './dialogs/edit/EditDialog';
+import getDentists from '@/libs/dentists/getDentists';
+import deleteBooking from '@/libs/bookings/deleteBooking';
+import toast from 'react-hot-toast';
 
 export default async function BookedCard() {
   const session = await getServerSession(authOptions);
+  //Check if user is logged in
   if (!session || !session.user.token)
     return (
       <div className='flex justify-center items-center bg-white w-[800px] h-[200px] shadow-lg rounded-2xl text-4xl text-[#777777]'>
@@ -16,19 +21,28 @@ export default async function BookedCard() {
       </div>
     );
 
-  const profile = await getUserProfile(session.user.token);
-  const bookings = await getBookings(session.user.token);
+  const token = session.user.token;
+  const profile = await getUserProfile(token);
+  const bookings = await getBookings(token);
+  const success = () => toast.success('Appointment Deleted');
+  const fail = () => toast.error('Failed to delete appointment');
+
+  //Check if user has appointment
   if (bookings.count < 1)
     return (
       <div className='flex justify-center items-center bg-white w-[800px] h-[200px] shadow-lg rounded-2xl text-4xl text-[#777777]'>
         No Appointment
       </div>
     );
-  const bookingDetails = bookings.data;
+
+  const userBooking = bookings.data;
   const adminBooking = bookings.data.filter(
     (booking: BookingItem) => booking.user._id == profile.data._id,
   );
-  if (profile.data.role == 'admin') {
+  const dentists = (await getDentists()).data;
+  //Check if user is admin
+  const role = profile.data.role;
+  if (role == 'admin') {
     if (adminBooking.length < 1)
       return (
         <div className='flex justify-center items-center bg-white w-[800px] h-[200px] shadow-lg rounded-2xl text-4xl text-[#777777]'>
@@ -36,7 +50,26 @@ export default async function BookedCard() {
         </div>
       );
   }
-  // console.log(bookings);
+  const dentists_and_default = {
+    defaultDentist:
+      role == 'admin'
+        ? adminBooking[0].dentist._id
+        : userBooking[0].dentist._id,
+    dentists: dentists,
+  };
+
+  const deleteAppointment = async () => {
+    // try {
+    //   const res = await deleteBooking({
+    //     id: role == 'admin' ? adminBooking[0]._id : userBooking[0]._id,
+    //     token: token,
+    //   });
+    //   success();
+    // } catch {
+    //   fail();
+    //   console.log('error');
+    // }
+  };
 
   return (
     <div className='relative flex flex-col justify-center items-center bg-white w-[800px] h-[450px] shadow-lg rounded-2xl gap-4'>
@@ -79,7 +112,7 @@ export default async function BookedCard() {
             <div className='flex flex-row justify-between'>
               <p className='text-[#777777]'>Booking Date</p>
               <p>
-                {bookingDetails.map((booking: BookingItem) =>
+                {userBooking.map((booking: BookingItem) =>
                   dayjs(booking.bookingDate).format('DD/MM/YYYY'),
                 )}
               </p>
@@ -87,7 +120,7 @@ export default async function BookedCard() {
             <div className='flex flex-row justify-between'>
               <p className='text-[#777777]'>Dentist</p>
               <p>
-                {bookingDetails.map(
+                {userBooking.map(
                   (booking: BookingItem) => booking.dentist.name,
                 )}
               </p>
@@ -95,13 +128,18 @@ export default async function BookedCard() {
           </div>
         )}
         <div className='flex flex-row justify-between w-full gap-16 pt-5'>
-          <Button variant='contained' className='bg-sky-600 w-full p-2'>
-            Edit
-          </Button>
+          <EditDialog
+            dentists={dentists_and_default}
+            token={token}
+            bookingID={
+              role == 'admin' ? adminBooking[0]._id : userBooking[0]._id
+            }
+          />
           <Button
             variant='outlined'
             color='error'
             className='w-full p-2 border-2'
+            onClick={deleteAppointment}
           >
             Delete
           </Button>

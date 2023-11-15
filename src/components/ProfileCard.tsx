@@ -1,6 +1,6 @@
 import getDentist from '@/libs/dentists/getDentist';
 import Image from 'next/image';
-import MakeApptDialog from './MakeApptDialog';
+import CreateDialog from './dialogs/create/CreateDialog';
 import getDentists from '@/libs/dentists/getDentists';
 import BackIcon from './BackIcon';
 
@@ -51,10 +51,7 @@ export default async function ProfileCard({
             {dentistDetail.address}
           </p>
           {/* not finished yet */}
-          <MakeApptDialog
-            dentists={dentists_and_default}
-            token={token}
-          ></MakeApptDialog>
+          <CreateDialog dentists={dentists_and_default} token={token} />
         </div>
       </div>
     </div>
