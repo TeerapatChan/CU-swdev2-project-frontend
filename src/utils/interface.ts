@@ -8,6 +8,13 @@ type BookingItem = {
   createdAt: string;
 };
 
+type UserDetail = {
+  _id: string;
+  name: string;
+  email: string;
+  tel: string;
+};
+
 type DentistDetail = {
   _id: string;
   name: string;
@@ -16,23 +23,23 @@ type DentistDetail = {
   id: string;
 };
 
-type UserDetail = {
-  _id: string;
-  name: string;
-  email: string;
-  tel: string;
-};
-
 type UserProfile = {
   _id: string;
   name: string;
   email: string;
   tel: string;
-  role: string
+  role: string;
 };
 
 type dentistsProps = {
   defaultDentist: string;
   dentists: DentistDetail[];
 };
-export type { dentistsProps, DentistDetail, BookingItem, UserDetail ,UserProfile};
+
+export type {
+  dentistsProps,
+  DentistDetail,
+  BookingItem,
+  UserDetail,
+  UserProfile,
+};

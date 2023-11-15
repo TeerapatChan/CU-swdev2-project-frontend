@@ -1,6 +1,6 @@
 import getDentist from '@/libs/dentists/getDentist';
 import Image from 'next/image';
-import MakeApptDialog from './MakeApptDialog';
+import CreateDialog from './dialogs/create/CreateDialog';
 import getDentists from '@/libs/dentists/getDentists';
 import BackIcon from './BackIcon';
 
@@ -13,6 +13,10 @@ export default async function ProfileCard({
 }) {
   const dentists = (await getDentists()).data;
   const dentistDetail = (await getDentist(params.id)).data;
+  const dentists_and_default = {
+    defaultDentist: dentistDetail.id,
+    dentists: dentists,
+  };
 
   return (
     <div className='flex flex-col bg-white w-[800px] h-[600px] justify-center items-center shadow-lg rounded-2xl gap-5 relative'>
@@ -47,10 +51,7 @@ export default async function ProfileCard({
             {dentistDetail.address}
           </p>
           {/* not finished yet */}
-          <MakeApptDialog
-            dentists={{ defaultDentist: dentistDetail.id, dentists: dentists }}
-            token={token}
-          ></MakeApptDialog>
+          <CreateDialog dentists={dentists_and_default} token={token} />
         </div>
       </div>
     </div>

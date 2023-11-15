@@ -22,7 +22,7 @@ export default function SignInForm() {
   });
 
   const formSubmit = async (data: LoginSchema) => {
-    const result = await signIn('credentials', {
+    const res = await signIn('credentials', {
       email: data.email,
       password: data.password,
       redirect: true,
@@ -50,7 +50,7 @@ export default function SignInForm() {
         <div className='self-center'>
           Don't have account?
           <Link
-            href='/auth/signup'
+            href='/signup'
             className='text-blue-900 font-medium hover:text-blue-800'
           >
             {' '}

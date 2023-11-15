@@ -1,4 +1,3 @@
-
 import CreateDentistForm from '@/components/forms/CreateDentist/CreateDentistForm';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
@@ -11,7 +10,7 @@ export default async function CreateDentistPage() {
   if (profile.role !== 'admin') return null;
 
   return (
-    <div className="bg-[url('/img/main-bg.png')] h-[120vh] bg-cover flex justify-center items-center">
+    <div className="mt-[8vh] bg-[url('/img/main-bg.png')] h-[120vh] bg-cover flex justify-center items-center">
       <CreateDentistForm token={session.user.token} />
     </div>
   );

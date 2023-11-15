@@ -11,25 +11,27 @@ export default function DentistWithEditCard({
   name,
   hospital,
   id,
-  token
+  token,
 }: {
   profilePic: string;
   name: string;
   hospital: string;
-  id:string
-  token:string
+  id: string;
+  token: string;
 }) {
   const router = useRouter();
+
   const deletefunc = async () => {
     const success = () => toast.success(`Dentist ${name} Deleted`);
-    try{
+    try {
       const res = await deleteDentist({ id: id, token: token });
       success();
       router.refresh();
-    }catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
   };
+
   return (
     // dont for get to add link to dentist profile
     <div className='flex flex-col h-[320px] w-[320px] justify-center items-center shadow-md rounded-lg bg-white gap-2'>

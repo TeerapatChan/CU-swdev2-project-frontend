@@ -1,6 +1,5 @@
 'use client';
 import Button from '@mui/material/Button';
-import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DentistSchema } from '@/utils/FormSchema';
@@ -18,7 +17,6 @@ import BackIcon from '@/components/BackIcon';
 export default function CreateDentistForm({ token }: { token: string }) {
   const [selectedImage, setSelectedImage] = useState<File>();
   var url = '';
-  const router = useRouter();
   const { edgestore } = useEdgeStore();
   const success = () => toast.success('Dentist Created');
   const fail = () => toast.error('Dentist Creation Failed');
@@ -89,6 +87,11 @@ export default function CreateDentistForm({ token }: { token: string }) {
         type='submit'
         variant='contained'
         className='bg-sky-600 w-full mt-4'
+        onClick={() => {
+          if (selectedImage === undefined) {
+            toast.error('Please upload a profile picture');
+          }
+        }}
       >
         Save Profile
       </Button>

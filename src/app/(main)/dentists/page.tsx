@@ -1,6 +1,6 @@
 import DentistCard from '@/components/DentistCard';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../api/auth/[...nextauth]/route';
+import { authOptions } from '../../api/auth/[...nextauth]/route';
 import DentistsLogin from '@/components/DentistsLogin';
 import getDentists from '@/libs/dentists/getDentists';
 import { Suspense } from 'react';
@@ -8,12 +8,17 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Status from '@/components/Status';
 
 export default async function Dentists() {
-
-    const session = await getServerSession(authOptions);
-    const dentistsProfile =  await getDentists();
+  const session = await getServerSession(authOptions);
+  const dentistsProfile = await getDentists();
   return (
-    <Suspense fallback={<div className='flex justify-center py-24'><CircularProgress></CircularProgress></div>}>
-      <div className='bg-[url("/img/background.png")] bg-cover flex justify-center py-12'>
+    <Suspense
+      fallback={
+        <div className='flex justify-center py-24'>
+          <CircularProgress></CircularProgress>
+        </div>
+      }
+    >
+      <div className='mt-[8vh] bg-[url("/img/background.png")] bg-cover flex justify-center py-12'>
         <Status></Status>
         {session ? (
           <DentistsLogin></DentistsLogin>

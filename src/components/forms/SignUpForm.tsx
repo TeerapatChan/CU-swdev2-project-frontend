@@ -28,7 +28,7 @@ export default function SignUpForm() {
 
   const formSubmit = async (data: SignupSchema) => {
     try {
-      const result = await userSignup({
+      const res = await userSignup({
         name: data.name,
         email: data.email,
         tel: data.tel,
@@ -64,7 +64,7 @@ export default function SignUpForm() {
         <div className='self-center'>
           Already have an account?
           <Link
-            href='/auth/signin'
+            href='/signin'
             className='text-blue-900 font-medium hover:text-blue-800'
           >
             {' '}

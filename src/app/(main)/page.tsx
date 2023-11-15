@@ -1,11 +1,11 @@
-'use client'
+'use client';
 import { Button, CircularProgress } from '@mui/material';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+//import { useRouter } from 'next/navigation';
 import { Suspense } from 'react';
 
 export default function Home() {
-  const router = useRouter();
+  //const router = useRouter();
   return (
     <Suspense
       fallback={
@@ -38,7 +38,7 @@ export default function Home() {
               variant='contained'
               className='bg-sky-600 w-full py-2'
               onClick={() => {
-                router.push('/dentists');
+                // router.push('/dentists');
               }}
             >
               Book now
