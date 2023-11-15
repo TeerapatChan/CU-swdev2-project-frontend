@@ -1,47 +1,50 @@
 'use client';
 import { Dialog, DialogTitle, Button } from '@mui/material';
-import DateDentist from './DateDentist';
-import { useState, useEffect } from 'react';
-import dayjs, { Dayjs } from 'dayjs';
+import DateDentist from '../../DateDentist';
+import { useState } from 'react';
+import dayjs from 'dayjs';
 import { dentistsProps } from '@/utils/interface';
-import createBooking from '@/libs/bookings/createBooking';
-import Status from './Status';
+import Status from '../../Status';
 import toast from 'react-hot-toast';
+import updateBooking from '@/libs/bookings/updateBooking';
 
-export default function MakeApptPopup({
+export default function CreatePopup({
   open,
   onClose,
   dentists,
-  token
+  token,
+  bookingID,
 }: {
   open: boolean;
   onClose?: () => void;
-  dentists:dentistsProps;
-  token:string;
+  dentists: dentistsProps;
+  token: string;
+  bookingID: string;
 }) {
   var now = new Date();
   const [date, setDate] = useState<Date>(now);
   const [dentist, setDentist] = useState<string>(dentists.defaultDentist);
-  const success = () => toast.success('Appointment created');
-  const fail = () => toast.error('You can book only one appointment');
+  const success = () => toast.success('Appointment updated');
+  const fail = () => toast.error('Failed to update appointment');
 
-  const makeAppointment = async () => {
-    try{
-      const res = await createBooking({
-        id: dentist,
+  const updateAppointment = async () => {
+    try {
+      const res = await updateBooking({
+        id: bookingID,
         bookingDate: date,
-        token: token
+        token: token,
+        dentist: dentist,
       });
       success();
-    }catch{
+    } catch {
       fail();
       console.log('error');
     }
-  }
+  };
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <Status/>
+      <Status />
       <div className='flex flex-col gap-5 pr-12 pl-12 pt-10 pb-10 w-[600px] items-center'>
         <DialogTitle className='text-3xl font-bold'>
           Make an appointment
@@ -52,7 +55,12 @@ export default function MakeApptPopup({
           dentists={dentists}
           defaultDate={dayjs(now)}
         />
-        <Button type='submit' variant='contained' className='bg-sky-600 w-full' onClick={makeAppointment}>
+        <Button
+          type='submit'
+          variant='contained'
+          className='bg-sky-600 w-full'
+          onClick={updateAppointment}
+        >
           Submit
         </Button>
       </div>
