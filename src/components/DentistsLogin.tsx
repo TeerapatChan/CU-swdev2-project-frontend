@@ -5,6 +5,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import DentistWithEditCard from "./DentistWithEditCard";
 import DentistCard from "./DentistCard";
 import getDentists from "@/libs/dentists/getDentists";
+import AddNewDentist from "./AddNewDentist";
 export default async function DentistsLogin(){
     const session = await getServerSession(authOptions);
     if (!session || !session.user.token) return null;
@@ -14,13 +15,7 @@ export default async function DentistsLogin(){
      return (
        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12'>
          {profile.data.role == 'admin' ? (
-           <button
-             className='flex flex-col h-[320px] w-[320px] justify-center
-        items-center shadow-md rounded-lg gap-4 bg-white hover:shadow-xl'
-           >
-             <PersonAddIcon className='text-9xl relative right-4' />
-             <p className='font-medium text-xl'>Create Dentist</p>
-           </button>
+           <AddNewDentist></AddNewDentist>
          ) : null}
          {profile.data.role == 'admin'
            ? dentistsProfile.data.map((dentist: any) => (
@@ -29,6 +24,7 @@ export default async function DentistsLogin(){
                  name={dentist.name}
                  hospital={dentist.hospital}
                  id={dentist.id}
+                 token={session.user.token}
                />
              ))
            : dentistsProfile.data.map((dentist: any) => (
