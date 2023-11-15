@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import MenuBar from '@/components/MenuBar';
 import NextAuthProvider from '@/providers/NextAuthProvider';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './api/auth/[...nextauth]/route';
 import { EdgeStoreProvider } from '../libs/edgestore';
+import ReduxProvider from '@/redux/ReduxProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 

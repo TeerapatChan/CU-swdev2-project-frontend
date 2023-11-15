@@ -9,10 +9,10 @@ type BookingItem = {
 };
 
 type UserDetail = {
-  _id: string
-  name: string
-  email: string
-  tel: string
+  _id: string;
+  name: string;
+  email: string;
+  tel: string;
 };
 
 type DentistDetail = {
@@ -23,15 +23,23 @@ type DentistDetail = {
   id: string;
 };
 
-type UserDetail = {
+type UserProfile = {
   _id: string;
   name: string;
   email: string;
   tel: string;
+  role: string;
 };
 
 type dentistsProps = {
   defaultDentist: string;
   dentists: DentistDetail[];
 };
-export type { dentistsProps, DentistDetail, BookingItem, UserDetail };
+
+export type {
+  dentistsProps,
+  DentistDetail,
+  BookingItem,
+  UserDetail,
+  UserProfile,
+};

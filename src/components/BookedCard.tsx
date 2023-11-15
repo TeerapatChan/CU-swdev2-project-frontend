@@ -139,7 +139,7 @@ export default async function BookedCard() {
             variant='outlined'
             color='error'
             className='w-full p-2 border-2'
-            onClick={deleteAppointment}
+            // onClick={deleteAppointment}
           >
             Delete
           </Button>
