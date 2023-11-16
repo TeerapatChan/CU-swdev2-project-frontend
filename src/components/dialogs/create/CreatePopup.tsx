@@ -7,7 +7,7 @@ import { dentistsProps } from '@/utils/interface';
 import createBooking from '@/libs/bookings/createBooking';
 import Status from '../../Status';
 import toast from 'react-hot-toast';
-
+import { useRouter } from 'next/navigation';
 export default function CreatePopup({
   open,
   onClose,
@@ -24,7 +24,7 @@ export default function CreatePopup({
   const [dentist, setDentist] = useState<string>(dentists.defaultDentist);
   const success = () => toast.success('Appointment created');
   const fail = () => toast.error('You can book only one appointment');
-
+  const router = useRouter();
   const makeAppointment = async () => {
     try {
       const res = await createBooking({
@@ -33,6 +33,7 @@ export default function CreatePopup({
         token: token,
       });
       success();
+      // router.push('/mybooking');
     } catch {
       fail();
       console.log('error');

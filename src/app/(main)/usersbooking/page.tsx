@@ -29,16 +29,21 @@ export default async function UsersBooking() {
     );
 
   return (
-    <div className='mt-[8vh] bg-[url("/img/background.png")] bg-cover h-100% flex flex-col justify-center items-center gap-8 p-8'>
-      {bookings.map((booking: BookingItem) => (
-        <UserBooking
-          bookingDate={dayjs(booking.bookingDate)}
-          patientName={booking.user.name}
-          dentists={{ defaultDentist: booking.dentist.id, dentists: dentists }}
-          id={booking._id ? booking._id : ''}
-          token={session.user.token}
-        />
-      ))}
+    <div className='bg-[url("/img/background.png")] h-full bg-no-repeat bg-scroll'>
+      <div className='w-full flex flex-col justify-center items-center gap-8 p-8'>
+        {bookings.map((booking: BookingItem) => (
+          <UserBooking
+            bookingDate={dayjs(booking.bookingDate)}
+            patientName={booking.user.name}
+            dentists={{
+              defaultDentist: booking.dentist.id,
+              dentists: dentists,
+            }}
+            id={booking._id ? booking._id : ''}
+            token={session.user.token}
+          />
+        ))}
+      </div>
     </div>
   );
 }

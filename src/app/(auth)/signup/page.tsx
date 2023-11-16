@@ -1,8 +1,15 @@
+'use client'
 import Image from 'next/image';
 import SignUpForm from '@/components/forms/SignUpForm';
 
 export default function SignUpPage() {
   return (
+    <div>
+      <style jsx global>{`
+        body {
+          margin: 0;
+        }
+      `}</style>
     <div className="bg-[url('/img/sign-up-background.png')] h-screen bg-cover flex justify-center items-center">
       <div className='w-4/5 h-4/5 bg-white shadow-xl rounded-xl flex flex-row'>
         <div className='w-4/6 flex flex-col justify-center items-center gap-5'>
@@ -19,6 +26,7 @@ export default function SignUpPage() {
           ></Image>
         </div>
       </div>
+    </div>
     </div>
   );
 }

@@ -7,6 +7,7 @@ import { dentistsProps } from '@/utils/interface';
 import Status from '../../Status';
 import toast from 'react-hot-toast';
 import updateBooking from '@/libs/bookings/updateBooking';
+import { useRouter } from 'next/navigation';
 
 export default function CreatePopup({
   open,
@@ -26,7 +27,7 @@ export default function CreatePopup({
   const [dentist, setDentist] = useState<string>(dentists.defaultDentist);
   const success = () => toast.success('Appointment updated');
   const fail = () => toast.error('Failed to update appointment');
-
+  const router = useRouter();
   const updateAppointment = async () => {
     try {
       const res = await updateBooking({
@@ -36,6 +37,7 @@ export default function CreatePopup({
         dentist: dentist,
       });
       success();
+      router.refresh()
     } catch {
       fail();
       console.log('error');

@@ -18,12 +18,12 @@ export default async function Dentists() {
         </div>
       }
     >
-      <div className='mt-[8vh] bg-[url("/img/background.png")] bg-cover flex justify-center py-12'>
+      <div className='bg-[url("/img/background.png")] h-[92vh] flex justify-center'>
         <Status></Status>
         {session ? (
           <DentistsLogin></DentistsLogin>
         ) : (
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12'>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 my-[4vh]'>
             {dentistsProfile.data.map((dentist: any) => (
               <DentistCard
                 profilePic={dentist.picture}
