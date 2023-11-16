@@ -14,7 +14,7 @@ export default async function DentistsLogin() {
   console.log(profile);
   const dentistsProfile = await getDentists();
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12'>
+    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 my-[4vh]'>
       {profile.data.role == 'admin' ? <AddNewDentist></AddNewDentist> : null}
       {profile.data.role == 'admin'
         ? dentistsProfile.data.map((dentist: any) => (

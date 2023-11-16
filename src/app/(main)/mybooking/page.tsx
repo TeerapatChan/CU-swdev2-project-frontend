@@ -11,9 +11,9 @@ export default function MyBookingPage() {
         </div>
       }
     >
-      <div className='bg-[url("/img/background.png")] h-[92vh] bg-cover flex justify-center items-center'>
+      <div className='bg-[url("/img/background.png")] h-[92vh] bg-cover flex justify-center items-center '>
         <BookedCard />
       </div>
-    </Suspense>
+   </Suspense>
   );
 }
