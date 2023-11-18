@@ -1,15 +1,15 @@
 import DentistCard from '@/components/DentistCard';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../../api/auth/[...nextauth]/route';
 import DentistsLogin from '@/components/DentistsLogin';
 import getDentists from '@/libs/dentists/getDentists';
 import { Suspense } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Status from '@/components/Status';
+import { userStore } from '@/zustand/store';
 
 export default async function Dentists() {
-  const session = await getServerSession(authOptions);
   const dentistsProfile = await getDentists();
+  const session = userStore.getState().userProfile;
+  console.log('this is for dentists page\n', session);
   return (
     <Suspense
       fallback={

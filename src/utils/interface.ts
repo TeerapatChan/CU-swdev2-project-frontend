@@ -23,17 +23,18 @@ type DentistDetail = {
   id: string;
 };
 
+type dentistsProps = {
+  defaultDentist: string;
+  dentists: DentistDetail[];
+};
+
 type UserProfile = {
   _id: string;
   name: string;
   email: string;
   tel: string;
   role: string;
-};
-
-type dentistsProps = {
-  defaultDentist: string;
-  dentists: DentistDetail[];
+  token: string;
 };
 
 export type {

@@ -1,28 +1,26 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import getBookings from '@/libs/bookings/getBookings';
 import getUserProfile from '@/libs/user/getUserProfile';
 import { BookingItem } from '@/utils/interface';
 import { Button } from '@mui/material';
 import dayjs from 'dayjs';
-import { getServerSession } from 'next-auth';
 import BackIcon from './BackIcon';
 import EditDialog from './dialogs/edit/EditDialog';
 import getDentists from '@/libs/dentists/getDentists';
 import deleteBooking from '@/libs/bookings/deleteBooking';
 import toast from 'react-hot-toast';
+import { userStore } from '@/zustand/store';
 
 export default async function BookedCard() {
-  const session = await getServerSession(authOptions);
+  const session = userStore.getState().userProfile;
   //Check if user is logged in
-  if (!session || !session.user.token)
+  if (!session || !session.token)
     return (
       <div className='flex justify-center items-center bg-white w-[800px] h-[200px] shadow-lg rounded-2xl text-4xl text-[#777777]'>
         Please Login First
       </div>
     );
 
-  const token = session.user.token;
-  const profile = await getUserProfile(token);
+  const token = session.token;
   const bookings = await getBookings(token);
   const success = () => toast.success('Appointment Deleted');
   const fail = () => toast.error('Failed to delete appointment');
@@ -37,11 +35,11 @@ export default async function BookedCard() {
 
   const userBooking = bookings.data;
   const adminBooking = bookings.data.filter(
-    (booking: BookingItem) => booking.user._id == profile.data._id,
+    (booking: BookingItem) => booking.user._id == session._id,
   );
   const dentists = (await getDentists()).data;
   //Check if user is admin
-  const role = profile.data.role;
+  const role = session.role;
   if (role == 'admin') {
     if (adminBooking.length < 1)
       return (
@@ -78,17 +76,17 @@ export default async function BookedCard() {
       <div className='flex flex-col w-[550px] h-fit gap-4 pt-10 text-xl'>
         <div className='flex flex-row justify-between'>
           <p className='text-[#777777]'>Name</p>
-          <p>{profile.data.name}</p>
+          <p>{session.name}</p>
         </div>
         <div className='flex flex-row justify-between'>
           <p className='text-[#777777]'>Email</p>
-          <p>{profile.data.email}</p>
+          <p>{session.email}</p>
         </div>
         <div className='flex flex-row justify-between'>
           <p className='text-[#777777]'>Tel</p>
-          <p>{profile.data.tel}</p>
+          <p>{session.tel}</p>
         </div>
-        {profile.data.role === 'admin' ? (
+        {session.role === 'admin' ? (
           <div className='flex flex-col w-[550px] h-fit gap-4 text-xl'>
             <div className='flex flex-row justify-between'>
               <p className='text-[#777777]'>Booking Date</p>

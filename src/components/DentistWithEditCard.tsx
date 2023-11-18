@@ -20,7 +20,6 @@ export default function DentistWithEditCard({
   token: string;
 }) {
   const router = useRouter();
-
   const deletefunc = async () => {
     const success = () => toast.success(`Dentist ${name} Deleted`);
     try {

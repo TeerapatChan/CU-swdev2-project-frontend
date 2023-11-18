@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DentistSchema } from '@/utils/FormSchema';
 import { DentistYup } from '@/utils/YupSchema';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import EditDentistInput from './EditDentistInput';
 import EditDentistImage from './EditDentistImage';
@@ -13,6 +12,7 @@ import updateDentist from '@/libs/dentists/updateDentist';
 import toast from 'react-hot-toast';
 import Status from '@/components/Status';
 import BackIcon from '@/components/BackIcon';
+import { revalidatePath } from 'next/cache';
 
 export default function EditDentistForm({
   defaultValues,
@@ -26,7 +26,6 @@ export default function EditDentistForm({
   id: string;
 }) {
   const [selectedImage, setSelectedImage] = useState<File>();
-  const router = useRouter();
   const { edgestore } = useEdgeStore();
   const notify = () => toast.success('Update success');
 
@@ -65,6 +64,8 @@ export default function EditDentistForm({
         token: token,
       });
       notify();
+      revalidatePath('/dentists');
+      revalidatePath(`/dentists/edit/${id}`);
       console.log(selectedImage);
       console.log(data);
     } catch (error) {
