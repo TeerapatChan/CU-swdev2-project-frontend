@@ -11,8 +11,8 @@ export default async function MenuBar() {
   //check user or admin
   return (
     <div className='flex flex-row fixed top-0 left-0 right-0 z-20 bg-white h-[8vh] w-screen justify-around'>
-      <div className='flex h-full text-lg items-center justify-center mt-auto mb-auto'>
-        SMILECLINIC
+      <div className='flex h-full text-2xl items-center justify-center mt-auto mb-auto font-Nova'>
+        SMILE CLINIC
       </div>
       <div className='flex flex-row'>
         <MenuItem name='Home' refLink='/'></MenuItem>
