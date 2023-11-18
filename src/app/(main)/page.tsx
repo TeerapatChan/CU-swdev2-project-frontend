@@ -27,11 +27,11 @@ export default function Home() {
           </div>
         </div>
         <div className='flex w-[50vw] h-[92vh] items-center justify-center'>
-          <div className='flex flex-col w-3/5 h-fit text-5xl gap-4'>
+          <div className='flex flex-col w-7/10 h-fit text-6xl gap-4 font-medium'>
             <div>Your great smile </div>
             <div>begins with</div>
             <div>a great dentist.</div>
-            <div className='text-sm'>
+            <div className='text-sm font-normal'>
               "Your Journey to a Brighter, Healthier Smile Starts Here"
             </div>
             <Button

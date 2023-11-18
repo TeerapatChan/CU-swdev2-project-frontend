@@ -22,7 +22,11 @@ export default async function RootLayout({
   const nextAuthSession = await getServerSession(authOptions);
   return (
     <html lang='en'>
-      <body className={inter.className}>
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
+      </style>
+      <body className='font-IBM'>
         <EdgeStoreProvider>
           <NextAuthProvider session={nextAuthSession}>
             {children}

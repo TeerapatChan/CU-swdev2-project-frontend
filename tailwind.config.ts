@@ -3,7 +3,12 @@ import type { Config } from 'tailwindcss';
 const config: Config = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'IBM': ['IBM Plex Sans', 'sans-serif'],
+        'Nova': ['Ibarra Real Nova', 'serif'],
+      },
+    },
   },
   plugins: [],
 };
