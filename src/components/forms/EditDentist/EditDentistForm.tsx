@@ -65,8 +65,6 @@ export default function EditDentistForm({
         token: token,
       });
       notify();
-      console.log(selectedImage);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }

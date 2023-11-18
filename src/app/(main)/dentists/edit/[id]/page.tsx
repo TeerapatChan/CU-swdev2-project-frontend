@@ -25,7 +25,6 @@ export default async function EditDentistPage({
     address: dentist.address,
     expertist: dentist.expertist,
   };
-  console.log(dentist);
 
   return (
     <div className="mt-[8vh] bg-[url('/img/main-bg.png')] h-[120vh] bg-cover flex justify-center items-center">

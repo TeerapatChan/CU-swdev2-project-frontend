@@ -34,11 +34,9 @@ export default function UserBooking(props: UserBookingProps) {
         bookingDate: date,
         token: token,
       });
-      console.log('success');
       updateSuccess();
     } catch {
       updateFail();
-      console.log('error');
     }
   };
 
@@ -51,7 +49,6 @@ export default function UserBooking(props: UserBookingProps) {
       deleteSuccess();
     } catch {
       deleteFail();
-      console.log('error');
     }
   };
   return (

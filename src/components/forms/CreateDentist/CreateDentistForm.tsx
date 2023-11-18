@@ -63,7 +63,6 @@ export default function CreateDentistForm({ token }: { token: string }) {
         expertist: '',
       });
       setSelectedImage(undefined);
-      console.log(data);
     } catch (error) {
       fail();
       console.log(error);

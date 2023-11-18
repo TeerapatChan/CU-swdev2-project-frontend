@@ -23,8 +23,7 @@ export default function DateDentist({
 }) {
   const [date, setDate] = useState<Dayjs>(dayjs(defaultDate));
   const [dentist, setDentist] = useState<string>(dentists.defaultDentist);
-  // console.log(defaultDate)
-  // console.log(dentist)
+
   return (
     <>
       <div className='w-full flex flex-row gap-10 justify-between mb-2'>

@@ -29,6 +29,7 @@ type UserProfile = {
   email: string;
   tel: string;
   role: string;
+  token: string;
 };
 
 type dentistsProps = {

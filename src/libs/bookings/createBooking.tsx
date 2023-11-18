@@ -1,14 +1,13 @@
 export default async function createBooking({
   id,
   bookingDate,
-  token
+  token,
 }: {
   id: string;
   bookingDate: Date;
-  token:string;
+  token: string;
 }) {
   try {
-    console.log(token)
     const response = await fetch(
       `http://localhost:5000/api/v1/dentists/${id}/bookings`,
       {
@@ -17,7 +16,7 @@ export default async function createBooking({
           'Content-Type': 'application/json',
           authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({bookingDate}),
+        body: JSON.stringify({ bookingDate }),
       },
     );
 
