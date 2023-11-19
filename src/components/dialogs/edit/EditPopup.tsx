@@ -3,31 +3,32 @@ import { Dialog, DialogTitle, Button } from '@mui/material';
 import DateDentist from '../../DateDentist';
 import { useState } from 'react';
 import dayjs from 'dayjs';
-import { dentistsProps } from '@/utils/interface';
+import { BookingItem, dentistsProps } from '@/utils/interface';
 import Status from '../../Status';
 import toast from 'react-hot-toast';
 import updateBooking from '@/libs/bookings/updateBooking';
 import { useRouter } from 'next/navigation';
+import { useBookingsStore, useMyBookingStore } from '@/zustand/store';
+import getBookings from '@/libs/bookings/getBookings';
 
 export default function CreatePopup({
   open,
   onClose,
-  dentists,
+  defaultDentist,
   token,
   bookingID,
 }: {
   open: boolean;
   onClose?: () => void;
-  dentists: dentistsProps;
+  defaultDentist: string;
   token: string;
   bookingID: string;
 }) {
   var now = new Date();
   const [date, setDate] = useState<Date>(now);
-  const [dentist, setDentist] = useState<string>(dentists.defaultDentist);
+  const [dentist, setDentist] = useState<string>(defaultDentist);
   const success = () => toast.success('Appointment updated');
   const fail = () => toast.error('Failed to update appointment');
-  const router = useRouter();
   const updateAppointment = async () => {
     try {
       const res = await updateBooking({
@@ -36,11 +37,30 @@ export default function CreatePopup({
         token: token,
         dentist: dentist,
       });
+      const bookings = (await getBookings(token)).data.map(
+        (booking: BookingItem) => {
+          const { _id, bookingDate, user, dentist } = booking;
+          const { name: dName, _id: dId } = dentist;
+          const newBooking = {
+            _id,
+            bookingDate,
+            user,
+            dentist: {
+              name: dName,
+              _id: dId,
+            },
+          };
+          if (newBooking._id === bookingID) {
+            useMyBookingStore.setState({ myBooking: newBooking });
+          }
+          return newBooking;
+        },
+      );
+      useBookingsStore.setState({ bookings: bookings });
       success();
-      router.refresh()
-    } catch {
+    } catch (error) {
       fail();
-      console.log('error');
+      console.log(error);
     }
   };
 
@@ -54,8 +74,8 @@ export default function CreatePopup({
         <DateDentist
           onDateChange={(e) => setDate(e)}
           onDentistChange={(e) => setDentist(e)}
-          dentists={dentists}
-          defaultDate={dayjs(now)}
+          defaultDentist={defaultDentist}
+          defaultDate={dayjs(date)}
         />
         <Button
           type='submit'

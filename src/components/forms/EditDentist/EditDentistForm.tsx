@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DentistSchema } from '@/utils/FormSchema';
 import { DentistYup } from '@/utils/YupSchema';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import EditDentistInput from './EditDentistInput';
 import EditDentistImage from './EditDentistImage';
@@ -13,6 +12,7 @@ import updateDentist from '@/libs/dentists/updateDentist';
 import toast from 'react-hot-toast';
 import Status from '@/components/Status';
 import BackIcon from '@/components/BackIcon';
+import { useDentistStore } from '@/zustand/store';
 
 export default function EditDentistForm({
   defaultValues,
@@ -26,10 +26,9 @@ export default function EditDentistForm({
   id: string;
 }) {
   const [selectedImage, setSelectedImage] = useState<File>();
-  const router = useRouter();
   const { edgestore } = useEdgeStore();
-  const notify = () => toast.success('Update success');
-
+  const success = () => toast.success('Update success');
+  const fail = () => toast.error('Update fail');
   const {
     handleSubmit,
     control,
@@ -64,8 +63,21 @@ export default function EditDentistForm({
         picture: picture,
         token: token,
       });
-      notify();
+      const editDentist = useDentistStore.getState().dentists.map((dentist) => {
+        if (dentist.id === id) {
+          dentist.name = data.name;
+          dentist.tel = data.tel;
+          dentist.hospital = data.hospital;
+          dentist.address = data.address;
+          dentist.expertist = data.expertist;
+          dentist.picture = picture;
+        }
+        return dentist;
+      });
+      useDentistStore.setState({ dentists: editDentist });
+      success();
     } catch (error) {
+      fail();
       console.log(error);
     }
   };

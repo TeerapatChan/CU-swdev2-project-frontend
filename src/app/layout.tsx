@@ -5,6 +5,17 @@ import NextAuthProvider from '@/providers/NextAuthProvider';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './api/auth/[...nextauth]/route';
 import { EdgeStoreProvider } from '../libs/edgestore';
+import getUserProfile from '@/libs/user/getUserProfile';
+import StoreInitializer from '@/zustand/StoreInitializer';
+import {
+  userStore,
+  useDentistStore,
+  useMyBookingStore,
+  useBookingsStore,
+} from '@/zustand/store';
+import getDentists from '@/libs/dentists/getDentists';
+import getBookings from '@/libs/bookings/getBookings';
+import { BookingItem } from '@/utils/interface';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,12 +29,62 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const nextAuthSession = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
+  let user = null;
+  let bookings = [];
+  let myBooking = null;
+
+  if (session) {
+    const userProfile = await getUserProfile(session.user.token);
+    const { _id, name, email, tel, role } = userProfile.data;
+    const token = session.user.token;
+    const sessionUser = { _id, name, email, tel, role, token };
+    const sessionBookings = (await getBookings(token)).data;
+    const storeBookings = sessionBookings.map((booking: any) => {
+      const { _id, bookingDate, user, dentist } = booking;
+      const { name: dName, id: dId } = dentist;
+      const newBooking = {
+        _id,
+        bookingDate,
+        user,
+        dentist: {
+          name: dName,
+          _id: dId,
+        },
+      };
+      return newBooking;
+    });
+    userStore.setState({ userProfile: sessionUser });
+    useBookingsStore.setState({ bookings: storeBookings });
+
+    const adminRole = role === 'admin';
+    const selectedBooking = adminRole
+      ? storeBookings.find((booking: BookingItem) => booking.user._id === _id)
+      : storeBookings[0];
+    useMyBookingStore.setState({ myBooking: selectedBooking });
+    myBooking = selectedBooking;
+
+    user = sessionUser;
+    bookings = storeBookings;
+  } else {
+    userStore.setState({ userProfile: null });
+    useMyBookingStore.setState({ myBooking: null });
+  }
+
+  const dentists = (await getDentists()).data;
+  useDentistStore.setState({ dentists });
+
   return (
     <html lang='en'>
       <body className='font-IBM'>
         <EdgeStoreProvider>
-          <NextAuthProvider session={nextAuthSession}>
+          <NextAuthProvider session={session}>
+            <StoreInitializer
+              userProfile={user}
+              dentists={dentists}
+              myBooking={myBooking}
+              bookings={bookings}
+            />
             {children}
           </NextAuthProvider>
         </EdgeStoreProvider>

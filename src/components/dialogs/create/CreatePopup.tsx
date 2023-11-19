@@ -1,42 +1,50 @@
 'use client';
 import { Dialog, DialogTitle, Button } from '@mui/material';
 import DateDentist from '../../DateDentist';
-import { useState, useEffect } from 'react';
-import dayjs from 'dayjs';
-import { dentistsProps } from '@/utils/interface';
+import { useState } from 'react';
 import createBooking from '@/libs/bookings/createBooking';
 import Status from '../../Status';
 import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
+import { useBookingsStore, useMyBookingStore } from '@/zustand/store';
+import getBookings from '@/libs/bookings/getBookings';
+import { BookingItem } from '@/utils/interface';
+import dayjs from 'dayjs';
+import { revalidatePath } from 'next/cache';
+
 export default function CreatePopup({
   open,
   onClose,
-  dentists,
+  defaultDentist,
   token,
 }: {
   open: boolean;
   onClose?: () => void;
-  dentists: dentistsProps;
+  defaultDentist: string;
   token: string;
 }) {
   var now = new Date();
   const [date, setDate] = useState<Date>(now);
-  const [dentist, setDentist] = useState<string>(dentists.defaultDentist);
+  const [dentist, setDentist] = useState<string>(defaultDentist);
   const success = () => toast.success('Appointment created');
   const fail = () => toast.error('You can book only one appointment');
-  const router = useRouter();
+
   const makeAppointment = async () => {
     try {
       const res = await createBooking({
-        id: dentist,
+        id: dentist ? dentist : '',
         bookingDate: date,
         token: token,
       });
+      const bookings = (await getBookings(token)).data;
+      useBookingsStore.setState({ bookings: bookings });
+      const myBooking = bookings.filter(
+        (booking: BookingItem) => booking._id === res.data._id,
+      );
+      useMyBookingStore.setState({ myBooking: myBooking[0] });
       success();
-      // router.push('/mybooking');
-    } catch {
+    } catch (error) {
       fail();
-      console.log('error');
+      console.log(error);
     }
   };
 
@@ -50,7 +58,7 @@ export default function CreatePopup({
         <DateDentist
           onDateChange={(e) => setDate(e)}
           onDentistChange={(e) => setDentist(e)}
-          dentists={dentists}
+          defaultDentist={defaultDentist}
           defaultDate={dayjs(now)}
         />
         <Button

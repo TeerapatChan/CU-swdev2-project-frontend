@@ -11,7 +11,7 @@ export default function AddNewDentist() {
         items-center shadow-md rounded-lg gap-4 hover:shadow-xl hover:bg-white bg-white text-black'
       onClick={() => router.push('/dentists/create')}
     >
-      <PersonAddIcon className='text-9xl relative right-4' />
+      <PersonAddIcon className='w-28 h-28' />
       <p className='font-medium text-xl'>Create Dentist</p>
     </button>
   );

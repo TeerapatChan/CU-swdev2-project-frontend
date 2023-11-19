@@ -5,7 +5,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { DentistSchema } from '@/utils/FormSchema';
 import { DentistYup } from '@/utils/YupSchema';
 import createDentist from '@/libs/dentists/createDentist';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import CreateDentistInput from './CreateDentistInput';
 import CreateDentistImage from './CreateDentistImage';
@@ -13,6 +12,8 @@ import { useEdgeStore } from '@/libs/edgestore';
 import Status from '@/components/Status';
 import toast from 'react-hot-toast';
 import BackIcon from '@/components/BackIcon';
+import { useDentistStore } from '@/zustand/store';
+import getDentists from '@/libs/dentists/getDentists';
 
 export default function CreateDentistForm({ token }: { token: string }) {
   const [selectedImage, setSelectedImage] = useState<File>();
@@ -63,6 +64,8 @@ export default function CreateDentistForm({ token }: { token: string }) {
         expertist: '',
       });
       setSelectedImage(undefined);
+      const dentists = (await getDentists()).data;
+      useDentistStore.setState({ dentists: dentists });
     } catch (error) {
       fail();
       console.log(error);

@@ -1,8 +1,8 @@
-import getDentist from '@/libs/dentists/getDentist';
+'use client';
 import Image from 'next/image';
 import CreateDialog from './dialogs/create/CreateDialog';
-import getDentists from '@/libs/dentists/getDentists';
 import BackIcon from './BackIcon';
+import { useDentistStore } from '@/zustand/store';
 
 export default async function ProfileCard({
   params,
@@ -11,12 +11,12 @@ export default async function ProfileCard({
   params: { id: string };
   token: string;
 }) {
-  const dentists = (await getDentists()).data;
-  const dentistDetail = (await getDentist(params.id)).data;
-  const dentists_and_default = {
-    defaultDentist: dentistDetail.id,
-    dentists: dentists,
-  };
+  const dentists = useDentistStore((state) => state.dentists);
+  const dentistDetail = dentists.find((dentist) => dentist.id === params.id);
+
+  if (dentistDetail === undefined) {
+    return null;
+  }
 
   return (
     <div className='flex flex-col bg-white w-[800px] h-[600px] justify-center items-center shadow-lg rounded-2xl gap-5 relative'>
@@ -50,8 +50,7 @@ export default async function ProfileCard({
             <span className='font-semibold'>Address : </span>
             {dentistDetail.address}
           </p>
-          {/* not finished yet */}
-          <CreateDialog dentists={dentists_and_default} token={token} />
+          <CreateDialog defaultDentist={dentistDetail.id} token={token} />
         </div>
       </div>
     </div>

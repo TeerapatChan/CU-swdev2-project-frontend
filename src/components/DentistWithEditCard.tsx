@@ -5,6 +5,7 @@ import { Button } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import deleteDentist from '@/libs/dentists/deleteDentist';
 import toast from 'react-hot-toast';
+import { useDentistStore } from '@/zustand/store';
 
 export default function DentistWithEditCard({
   profilePic,
@@ -22,9 +23,12 @@ export default function DentistWithEditCard({
   const router = useRouter();
 
   const deletefunc = async () => {
-    const success = () => toast.success(`Dentist ${name} Deleted`);
+    const success = () => toast.success(`Dentist: ${name} Deleted`);
     try {
       const res = await deleteDentist({ id: id, token: token });
+      const dentists = useDentistStore.getState().dentists;
+      const newDentists = dentists.filter((dentist) => dentist.id !== id);
+      useDentistStore.setState({ dentists: newDentists });
       success();
       router.refresh();
     } catch (err) {

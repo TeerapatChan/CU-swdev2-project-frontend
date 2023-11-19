@@ -1,15 +1,14 @@
+'use client';
 import DentistCard from '@/components/DentistCard';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../../api/auth/[...nextauth]/route';
 import DentistsLogin from '@/components/DentistsLogin';
-import getDentists from '@/libs/dentists/getDentists';
 import { Suspense } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Status from '@/components/Status';
+import { userStore, useDentistStore } from '@/zustand/store';
 
-export default async function Dentists() {
-  const session = await getServerSession(authOptions);
-  const dentistsProfile = await getDentists();
+export default function Dentists() {
+  const dentists = useDentistStore((state) => state.dentists);
+  const session = userStore((state) => state.userProfile);
   return (
     <Suspense
       fallback={
@@ -18,13 +17,14 @@ export default async function Dentists() {
         </div>
       }
     >
-      <div className='bg-[url("/img/background.png")] h-[92vh] flex justify-center'>
+      <div className='bg-[url("/img/background.png")] flex justify-center'>
         <Status></Status>
         {session ? (
-          <DentistsLogin></DentistsLogin>
+          <DentistsLogin dentists={dentists}></DentistsLogin>
         ) : (
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 my-[4vh]'>
-            {dentistsProfile.data.map((dentist: any) => (
+            {dentists.length}
+            {dentists.map((dentist: any) => (
               <DentistCard
                 profilePic={dentist.picture}
                 name={dentist.name}

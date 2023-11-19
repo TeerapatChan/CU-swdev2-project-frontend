@@ -2,50 +2,96 @@
 import { useState } from 'react';
 import DateDentist from './DateDentist';
 import { Button } from '@mui/material';
-import dayjs, { Dayjs } from 'dayjs';
-import { dentistsProps } from '@/utils/interface';
 import updateBooking from '@/libs/bookings/updateBooking';
 import Status from './Status';
 import toast from 'react-hot-toast';
 import deleteBooking from '@/libs/bookings/deleteBooking';
+import { useMyBookingStore, useBookingsStore } from '@/zustand/store';
+import { useRouter } from 'next/navigation';
+import { BookingItem } from '@/utils/interface';
+import getBookings from '@/libs/bookings/getBookings';
+import dayjs from 'dayjs';
 
 type UserBookingProps = {
-  bookingDate: Dayjs;
+  bookingDate: Date;
   patientName: string;
-  dentists: dentistsProps;
+  defaultDentist: string;
   id: string;
   token: string;
 };
 
 export default function UserBooking(props: UserBookingProps) {
-  const { bookingDate, patientName, dentists, id, token } = props;
-  const [date, setDate] = useState<Dayjs>(bookingDate);
-  const [dentistId, setDentistId] = useState(dentists.defaultDentist);
+  const { bookingDate, patientName, defaultDentist, id, token } = props;
+  const [date, setDate] = useState<Date>(bookingDate);
+  const [dentistId, setDentistId] = useState(defaultDentist);
   const updateSuccess = () => toast.success('Update Success');
   const updateFail = () => toast.error('Update Failed');
   const deleteSuccess = () => toast.success('Delete Success');
   const deleteFail = () => toast.error('Delete Failed');
-
+  const router = useRouter();
   const update = async () => {
     try {
       const res = await updateBooking({
         id: id,
-        dentist: dentistId,
+        dentist: dentistId || '',
         bookingDate: date,
         token: token,
       });
+
+      const bookings = (await getBookings(token)).data.map(
+        (booking: BookingItem) => {
+          const { _id, bookingDate, user, dentist } = booking;
+          const { name: dName, _id: dId } = dentist;
+          const newBooking = {
+            _id,
+            bookingDate,
+            user,
+            dentist: {
+              name: dName,
+              _id: dId,
+            },
+          };
+          if (newBooking._id === id) {
+            useMyBookingStore.setState({ myBooking: newBooking });
+          }
+          return newBooking;
+        },
+      );
+      useBookingsStore.setState({ bookings: bookings });
       updateSuccess();
     } catch {
       updateFail();
     }
   };
 
-  const cancle = async () => {
+  const remove = async () => {
     try {
       const res = await deleteBooking({
         id: id,
         token: token,
       });
+      let found = false;
+      const bookings = (await getBookings(token)).data.map(
+        (booking: BookingItem) => {
+          const { _id, bookingDate, user, dentist } = booking;
+          const { name: dName, _id: dId } = dentist;
+          const newBooking = {
+            _id,
+            bookingDate,
+            user,
+            dentist: {
+              name: dName,
+              _id: dId,
+            },
+          };
+          if (newBooking._id === id) {
+            found = true;
+          }
+          return newBooking;
+        },
+      );
+      if (!found) useMyBookingStore.setState({ myBooking: null });
+      useBookingsStore.setState({ bookings: bookings });
       deleteSuccess();
     } catch {
       deleteFail();
@@ -64,7 +110,7 @@ export default function UserBooking(props: UserBookingProps) {
       <DateDentist
         onDateChange={(e) => setDate(e)}
         onDentistChange={(e) => setDentistId(e)}
-        dentists={dentists}
+        defaultDentist={defaultDentist}
         defaultDate={dayjs(bookingDate)}
       />
       <div className='flex flex-row gap-5 w-full'>
@@ -79,7 +125,7 @@ export default function UserBooking(props: UserBookingProps) {
           variant='outlined'
           color='error'
           className='w-full border-2'
-          onClick={cancle}
+          onClick={remove}
         >
           Delete
         </Button>
