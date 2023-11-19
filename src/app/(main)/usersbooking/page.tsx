@@ -29,7 +29,7 @@ export default async function UsersBooking() {
     );
 
   return (
-    <div className='bg-[url("/img/background.png")] h-full bg-no-repeat bg-scroll'>
+    <main className='bg-[url("/img/background.png")] h-full bg-no-repeat bg-scroll'>
       <div className='w-full flex flex-col justify-center items-center gap-8 p-8'>
         {bookings.map((booking: BookingItem) => (
           <UserBooking
@@ -44,6 +44,6 @@ export default async function UsersBooking() {
           />
         ))}
       </div>
-    </div>
+    </main>
   );
 }

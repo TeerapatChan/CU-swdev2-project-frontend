@@ -28,13 +28,13 @@ export default async function EditDentistPage({
   console.log(dentist);
 
   return (
-    <div className="mt-[8vh] bg-[url('/img/main-bg.png')] h-[120vh] bg-cover flex justify-center items-center">
+    <main className="mt-[8vh] bg-[url('/img/main-bg.png')] h-[120vh] bg-cover flex justify-center items-center">
       <EditDentistForm
         defaultValues={defaultValues}
         picture={picture}
         token={session.user.token}
         id={params.id}
       />
-    </div>
+    </main>
   );
 }

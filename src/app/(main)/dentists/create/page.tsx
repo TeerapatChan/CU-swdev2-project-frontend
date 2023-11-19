@@ -10,8 +10,8 @@ export default async function CreateDentistPage() {
   if (profile.role !== 'admin') return null;
 
   return (
-    <div className="mt-[8vh] bg-[url('/img/main-bg.png')] h-[120vh] bg-cover flex justify-center items-center">
+    <main className="mt-[8vh] bg-[url('/img/main-bg.png')] h-[120vh] bg-cover flex justify-center items-center">
       <CreateDentistForm token={session.user.token} />
-    </div>
+    </main>
   );
 }
