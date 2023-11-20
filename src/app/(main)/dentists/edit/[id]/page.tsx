@@ -1,21 +1,29 @@
+'use client';
 import EditDentistForm from '@/components/forms/EditDentist/EditDentistForm';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import getUserProfile from '@/libs/user/getUserProfile';
 import getDentist from '@/libs/dentists/getDentist';
+import { userStore, useDentistStore } from '@/zustand/store';
+import { useEffect, useState } from 'react';
+import { DentistDetail } from '@/utils/interface';
 
-export default async function EditDentistPage({
+export default function EditDentistPage({
   params,
 }: {
   params: { id: string };
 }) {
-  const session = await getServerSession(authOptions);
-  if (!session || !session.user.token) return null;
-  const profile = (await getUserProfile(session.user.token)).data;
-  if (profile.role !== 'admin') return null;
+  const session = userStore((state) => state.userProfile);
+  const [dentist, setDentist] = useState<DentistDetail>();
+  if (!session || !session.token) return null;
+  if (session.role !== 'admin') return null;
 
-  const id = params.id;
-  const dentist = (await getDentist(id)).data;
+  useEffect(() => {
+    const fetchData = async () => {
+      const dentist = (await getDentist(params.id)).data;
+      setDentist(dentist);
+    };
+    fetchData();
+  }, []);
+
+  if (!dentist) return null;
   const picture = dentist.picture;
 
   const defaultValues = {
@@ -25,14 +33,13 @@ export default async function EditDentistPage({
     address: dentist.address,
     expertist: dentist.expertist,
   };
-  console.log(dentist);
 
   return (
-    <main className="mt-[8vh] bg-[url('/img/main-bg.png')] h-[120vh] bg-cover flex justify-center items-center">
+    <main className='bg-[#F3F3F3] h-fit bg-cover flex justify-center items-center'>
       <EditDentistForm
         defaultValues={defaultValues}
         picture={picture}
-        token={session.user.token}
+        token={session.token}
         id={params.id}
       />
     </main>

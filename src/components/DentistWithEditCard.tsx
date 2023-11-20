@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import deleteDentist from '@/libs/dentists/deleteDentist';
 import toast from 'react-hot-toast';
 import dynamic from 'next/dynamic';
+import { useDentistStore } from '@/zustand/store';
 
 const DeleteIcon = dynamic(() => import('@mui/icons-material/Delete'), {
   ssr: false,
@@ -27,7 +28,10 @@ export default function DentistWithEditCard({
   const deleteFunction = async () => {
     try {
       const res = await deleteDentist({ id: id, token: token });
-      toast.success(`Dentist ${name} Deleted`);
+      const dentists = useDentistStore.getState().dentists;
+      const newDentists = dentists.filter((dentist) => dentist.id !== id);
+      useDentistStore.setState({ dentists: newDentists });
+      toast.success(`Dentist: ${name} Deleted`);
       router.refresh();
     } catch (err) {
       console.log(err);

@@ -1,11 +1,13 @@
 import { Dayjs } from 'dayjs';
 
 type BookingItem = {
-  _id?: string;
-  bookingDate: Dayjs;
+  _id: string;
+  bookingDate: Date;
   user: UserDetail;
-  dentist: DentistDetail;
-  createdAt: string;
+  dentist: {
+    name: string;
+    _id: string;
+  };
 };
 
 type UserDetail = {
@@ -16,11 +18,13 @@ type UserDetail = {
 };
 
 type DentistDetail = {
-  _id: string;
   name: string;
   address: string;
   tel: string;
   id: string;
+  hospital: string;
+  expertist: string;
+  picture: string;
 };
 
 type UserProfile = {
@@ -29,11 +33,12 @@ type UserProfile = {
   email: string;
   tel: string;
   role: string;
+  token: string;
 };
 
 type dentistsProps = {
-  defaultDentist: string;
-  dentists: DentistDetail[];
+  defaultDentist?: string;
+  dentists: DentistDetail[] | [];
 };
 
 export type {

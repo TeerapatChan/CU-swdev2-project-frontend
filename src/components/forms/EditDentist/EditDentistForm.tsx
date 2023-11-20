@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DentistSchema } from '@/utils/FormSchema';
 import { DentistYup } from '@/utils/YupSchema';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import EditDentistInput from './EditDentistInput';
 import EditDentistImage from './EditDentistImage';
@@ -13,6 +12,7 @@ import updateDentist from '@/libs/dentists/updateDentist';
 import toast from 'react-hot-toast';
 import Status from '@/components/Status';
 import BackIcon from '@/components/BackIcon';
+import { useDentistStore } from '@/zustand/store';
 
 export default function EditDentistForm({
   defaultValues,
@@ -26,10 +26,9 @@ export default function EditDentistForm({
   id: string;
 }) {
   const [selectedImage, setSelectedImage] = useState<File>();
-  const router = useRouter();
   const { edgestore } = useEdgeStore();
-  const notify = () => toast.success('Update success');
-
+  const success = () => toast.success('Update success');
+  const fail = () => toast.error('Update fail');
   const {
     handleSubmit,
     control,
@@ -64,18 +63,28 @@ export default function EditDentistForm({
         picture: picture,
         token: token,
       });
-      notify();
-      console.log(selectedImage);
-      console.log(data);
+      const editDentist = useDentistStore.getState().dentists.map((dentist) => {
+        if (dentist.id === id) {
+          dentist.name = data.name;
+          dentist.tel = data.tel;
+          dentist.hospital = data.hospital;
+          dentist.address = data.address;
+          dentist.expertist = data.expertist;
+          dentist.picture = picture;
+        }
+        return dentist;
+      });
+      useDentistStore.setState({ dentists: editDentist });
+      success();
     } catch (error) {
+      fail();
       console.log(error);
     }
   };
 
   return (
     <form
-      className='w-[700px] h-[800px] flex flex-col gap-2 items-start justify-center 
-    bg-white rounded-lg pr-24 pl-24 pb-5 mt-10 mb-10 relative'
+      className='w-[700px] h-fit flex flex-col gap-4 items-center bg-white rounded-lg relative my-4 py-8'
       onSubmit={handleSubmit(formSubmit)}
     >
       <Status />
@@ -86,11 +95,7 @@ export default function EditDentistForm({
         defaultImage={picture}
       />
       <EditDentistInput control={control} errors={errors} />
-      <Button
-        type='submit'
-        variant='contained'
-        className='bg-sky-600 w-full mt-4'
-      >
+      <Button type='submit' variant='contained' className='bg-sky-600 w-[70%]'>
         Save Profile
       </Button>
     </form>

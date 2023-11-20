@@ -5,10 +5,10 @@ import { Button } from '@mui/material';
 import { dentistsProps } from '@/utils/interface';
 
 export default function CreateDialog({
-  dentists,
+  defaultDentist,
   token,
 }: {
-  dentists: dentistsProps;
+  defaultDentist: string;
   token: string;
 }) {
   const [open, setOpen] = useState(false);
@@ -26,7 +26,7 @@ export default function CreateDialog({
       <CreatePopup
         open={open}
         onClose={handleClose}
-        dentists={dentists}
+        defaultDentist={defaultDentist}
         token={token}
       />
     </>

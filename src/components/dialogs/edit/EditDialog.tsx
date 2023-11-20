@@ -5,11 +5,11 @@ import { Button } from '@mui/material';
 import { dentistsProps } from '@/utils/interface';
 
 export default function CreateDialog({
-  dentists,
+  defaultDentist,
   token,
   bookingID,
 }: {
-  dentists: dentistsProps;
+  defaultDentist: string;
   token: string;
   bookingID: string;
 }) {
@@ -28,7 +28,7 @@ export default function CreateDialog({
       <EditPopup
         open={open}
         onClose={handleClose}
-        dentists={dentists}
+        defaultDentist={defaultDentist}
         token={token}
         bookingID={bookingID}
       />

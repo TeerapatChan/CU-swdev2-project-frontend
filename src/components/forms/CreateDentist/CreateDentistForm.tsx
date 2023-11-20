@@ -5,7 +5,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { DentistSchema } from '@/utils/FormSchema';
 import { DentistYup } from '@/utils/YupSchema';
 import createDentist from '@/libs/dentists/createDentist';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import CreateDentistInput from './CreateDentistInput';
 import CreateDentistImage from './CreateDentistImage';
@@ -13,6 +12,8 @@ import { useEdgeStore } from '@/libs/edgestore';
 import Status from '@/components/Status';
 import toast from 'react-hot-toast';
 import BackIcon from '@/components/BackIcon';
+import { useDentistStore } from '@/zustand/store';
+import getDentists from '@/libs/dentists/getDentists';
 
 export default function CreateDentistForm({ token }: { token: string }) {
   const [selectedImage, setSelectedImage] = useState<File>();
@@ -63,7 +64,8 @@ export default function CreateDentistForm({ token }: { token: string }) {
         expertist: '',
       });
       setSelectedImage(undefined);
-      console.log(data);
+      const dentists = (await getDentists()).data;
+      useDentistStore.setState({ dentists: dentists });
     } catch (error) {
       fail();
       console.log(error);
@@ -72,8 +74,7 @@ export default function CreateDentistForm({ token }: { token: string }) {
 
   return (
     <form
-      className='w-[700px] h-[800px] flex flex-col gap-2 items-start justify-center 
-    bg-white rounded-lg pr-24 pl-24 pb-5 mt-10 mb-10 relative'
+      className='w-[700px] h-[fit] flex flex-col gap-4 items-center bg-white rounded-lg relative my-4 py-8'
       onSubmit={handleSubmit(formSubmit)}
     >
       <Status />
@@ -86,7 +87,7 @@ export default function CreateDentistForm({ token }: { token: string }) {
       <Button
         type='submit'
         variant='contained'
-        className='bg-sky-600 w-full mt-4'
+        className='bg-sky-600 w-[70%]'
         onClick={() => {
           if (selectedImage === undefined) {
             toast.error('Please upload a profile picture');

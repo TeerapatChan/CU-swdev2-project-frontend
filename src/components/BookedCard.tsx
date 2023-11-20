@@ -1,74 +1,79 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import getBookings from '@/libs/bookings/getBookings';
-import getUserProfile from '@/libs/user/getUserProfile';
-import { BookingItem } from '@/utils/interface';
+'use client';
 import { Button } from '@mui/material';
 import dayjs from 'dayjs';
-import { getServerSession } from 'next-auth';
 import BackIcon from './BackIcon';
 import EditDialog from './dialogs/edit/EditDialog';
-import getDentists from '@/libs/dentists/getDentists';
-import deleteBooking from '@/libs/bookings/deleteBooking';
+import { useRouter } from 'next/navigation';
+import {
+  useMyBookingStore,
+  userStore,
+  useDentistStore,
+  useBookingsStore,
+} from '@/zustand/store';
 import toast from 'react-hot-toast';
+import deleteBooking from '@/libs/bookings/deleteBooking';
+import { BookingItem } from '@/utils/interface';
+import getBookings from '@/libs/bookings/getBookings';
 
-export default async function BookedCard() {
-  const session = await getServerSession(authOptions);
-  //Check if user is logged in
-  if (!session || !session.user.token)
+export default function BookedCard() {
+  const session = userStore((state) => state.userProfile);
+  const router = useRouter();
+  if (!session || !session.token)
     return (
       <div className='flex justify-center items-center bg-white w-[800px] h-[200px] shadow-lg rounded-2xl text-4xl text-[#777777]'>
         Please Login First
       </div>
     );
 
-  const token = session.user.token;
-  const profile = await getUserProfile(token);
-  const bookings = await getBookings(token);
+  const myBooking = useMyBookingStore((state) => state.myBooking);
+  if (!myBooking) {
+    return (
+      <div className='flex justify-center items-center bg-white w-[800px] h-[200px] shadow-lg rounded-2xl text-4xl text-[#777777]'>
+        No Booking
+      </div>
+    );
+  }
+
+  const dentists = useDentistStore((state) => state.dentists);
   const success = () => toast.success('Appointment Deleted');
   const fail = () => toast.error('Failed to delete appointment');
 
-  //Check if user has appointment
-  if (bookings.count < 1)
-    return (
-      <div className='flex justify-center items-center bg-white w-[800px] h-[200px] shadow-lg rounded-2xl text-4xl text-[#777777]'>
-        No Appointment
-      </div>
-    );
-
-  const userBooking = bookings.data;
-  const adminBooking = bookings.data.filter(
-    (booking: BookingItem) => booking.user._id == profile.data._id,
-  );
-  const dentists = (await getDentists()).data;
-  //Check if user is admin
-  const role = profile.data.role;
-  if (role == 'admin') {
-    if (adminBooking.length < 1)
-      return (
-        <div className='flex justify-center items-center bg-white w-[800px] h-[200px] shadow-lg rounded-2xl text-4xl text-[#777777]'>
-          No Appointment
-        </div>
-      );
-  }
-  const dentists_and_default = {
-    defaultDentist:
-      role == 'admin'
-        ? adminBooking[0].dentist._id
-        : userBooking[0].dentist._id,
-    dentists: dentists,
-  };
-
   const deleteAppointment = async () => {
-    // try {
-    //   const res = await deleteBooking({
-    //     id: role == 'admin' ? adminBooking[0]._id : userBooking[0]._id,
-    //     token: token,
-    //   });
-    //   success();
-    // } catch {
-    //   fail();
-    //   console.log('error');
-    // }
+    try {
+      const res = await deleteBooking({
+        id: myBooking._id,
+        token: session.token,
+      });
+      let found = false;
+      const bookings = (await getBookings(session.token)).data.map(
+        (booking: BookingItem) => {
+          const { _id, bookingDate, user, dentist } = booking;
+          const { name: dName, _id: dId } = dentist;
+          const newBooking = {
+            _id,
+            bookingDate,
+            user,
+            dentist: {
+              name: dName,
+              _id: dId,
+            },
+          };
+          if (newBooking._id === myBooking._id) {
+            found = true;
+          }
+          return newBooking;
+        },
+      );
+      useBookingsStore.setState({ bookings: bookings });
+      router.push('/dentists');
+      success();
+      setTimeout(() => {
+        if (!found) useMyBookingStore.setState({ myBooking: null });
+      }, 1000);
+    } catch (error) {
+      fail();
+      console.log(error);
+    }
   };
 
   return (
@@ -78,68 +83,38 @@ export default async function BookedCard() {
       <div className='flex flex-col w-[550px] h-fit gap-4 pt-10 text-xl'>
         <div className='flex flex-row justify-between'>
           <p className='text-[#777777]'>Name</p>
-          <p>{profile.data.name}</p>
+          <p>{session.name}</p>
         </div>
         <div className='flex flex-row justify-between'>
           <p className='text-[#777777]'>Email</p>
-          <p>{profile.data.email}</p>
+          <p>{session.email}</p>
         </div>
         <div className='flex flex-row justify-between'>
           <p className='text-[#777777]'>Tel</p>
-          <p>{profile.data.tel}</p>
+          <p>{session.tel}</p>
         </div>
-        {profile.data.role === 'admin' ? (
-          <div className='flex flex-col w-[550px] h-fit gap-4 text-xl'>
-            <div className='flex flex-row justify-between'>
-              <p className='text-[#777777]'>Booking Date</p>
-              <p>
-                {adminBooking.map((booking: BookingItem) =>
-                  dayjs(booking.bookingDate).format('DD/MM/YYYY'),
-                )}
-              </p>
-            </div>
-            <div className='flex flex-row justify-between'>
-              <p className='text-[#777777]'>Dentist</p>
-              <p>
-                {adminBooking.map(
-                  (booking: BookingItem) => booking.dentist.name,
-                )}
-              </p>
-            </div>
+
+        <div className='flex flex-col w-[550px] h-fit gap-4 text-xl'>
+          <div className='flex flex-row justify-between'>
+            <p className='text-[#777777]'>Booking Date</p>
+            <p>{dayjs(myBooking.bookingDate).format('DD/MM/YYYY')}</p>
           </div>
-        ) : (
-          <div className='flex flex-col w-[550px] h-fit gap-4 text-xl'>
-            <div className='flex flex-row justify-between'>
-              <p className='text-[#777777]'>Booking Date</p>
-              <p>
-                {userBooking.map((booking: BookingItem) =>
-                  dayjs(booking.bookingDate).format('DD/MM/YYYY'),
-                )}
-              </p>
-            </div>
-            <div className='flex flex-row justify-between'>
-              <p className='text-[#777777]'>Dentist</p>
-              <p>
-                {userBooking.map(
-                  (booking: BookingItem) => booking.dentist.name,
-                )}
-              </p>
-            </div>
+          <div className='flex flex-row justify-between'>
+            <p className='text-[#777777]'>Dentist</p>
+            <p>{myBooking.dentist.name}</p>
           </div>
-        )}
+        </div>
         <div className='flex flex-row justify-between w-full gap-16 pt-5'>
           <EditDialog
-            dentists={dentists_and_default}
-            token={token}
-            bookingID={
-              role == 'admin' ? adminBooking[0]._id : userBooking[0]._id
-            }
+            defaultDentist={myBooking.dentist._id}
+            token={session.token}
+            bookingID={myBooking._id}
           />
           <Button
             variant='outlined'
             color='error'
             className='w-full p-2 border-2'
-            // onClick={deleteAppointment}
+            onClick={deleteAppointment}
           >
             Delete
           </Button>

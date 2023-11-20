@@ -1,17 +1,15 @@
+'use client';
 import CreateDentistForm from '@/components/forms/CreateDentist/CreateDentistForm';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import getUserProfile from '@/libs/user/getUserProfile';
+import { userStore } from '@/zustand/store';
 
-export default async function CreateDentistPage() {
-  const session = await getServerSession(authOptions);
-  if (!session || !session.user.token) return null;
-  const profile = (await getUserProfile(session.user.token)).data;
-  if (profile.role !== 'admin') return null;
+export default function CreateDentistPage() {
+  const session = userStore((state) => state.userProfile);
+  if (!session || !session.token) return null;
+  if (session.role !== 'admin') return null;
 
   return (
-    <main className="mt-[8vh] bg-[url('/img/main-bg.png')] h-[120vh] bg-cover flex justify-center items-center">
-      <CreateDentistForm token={session.user.token} />
+    <main className='bg-[#F3F3F3] h-fit flex justify-center items-center'>
+      <CreateDentistForm token={session.token} />
     </main>
   );
 }
