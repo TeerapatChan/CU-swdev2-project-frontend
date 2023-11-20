@@ -35,13 +35,13 @@ export default function EditDentistPage({
   };
 
   return (
-    <div className="mt-[8vh] bg-[url('/img/main-bg.png')] h-[120vh] bg-cover flex justify-center items-center">
+    <main className='bg-[#F3F3F3] h-fit bg-cover flex justify-center items-center'>
       <EditDentistForm
         defaultValues={defaultValues}
         picture={picture}
         token={session.token}
         id={params.id}
       />
-    </div>
+    </main>
   );
 }

@@ -4,12 +4,10 @@ import CreateDialog from './dialogs/create/CreateDialog';
 import BackIcon from './BackIcon';
 import { useDentistStore } from '@/zustand/store';
 
-export default async function ProfileCard({
+export default function ViewProfileCard({
   params,
-  token,
 }: {
   params: { id: string };
-  token: string;
 }) {
   const dentists = useDentistStore((state) => state.dentists);
   const dentistDetail = dentists.find((dentist) => dentist.id === params.id);
@@ -49,7 +47,9 @@ export default async function ProfileCard({
             <span className='font-semibold'>Address : </span>
             {dentistDetail.address}
           </p>
-          <CreateDialog defaultDentist={dentistDetail.id} token={token} />
+          <p className='line-clamp-1 font-thin text-[#777777] text-center'>
+            Please access your account to schedule an appointment
+          </p>
         </div>
       </div>
     </div>

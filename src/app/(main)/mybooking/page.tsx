@@ -1,7 +1,10 @@
-import BookedCard from '@/components/BookedCard';
+// import BookedCard from '@/components/BookedCard';
 import { CircularProgress } from '@mui/material';
+import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
-
+const BookedCard = dynamic(() => import('@/components/BookedCard'), {
+  ssr: false,
+});
 export default function MyBookingPage() {
   return (
     <Suspense
@@ -11,9 +14,9 @@ export default function MyBookingPage() {
         </div>
       }
     >
-      <div className='bg-[url("/img/background.png")] h-[92vh] bg-cover flex justify-center items-center '>
+      <main className='bg-[#F3F3F3] h-[92vh] bg-cover flex justify-center items-center '>
         <BookedCard />
-      </div>
-   </Suspense>
+      </main>
+    </Suspense>
   );
 }

@@ -10,7 +10,7 @@ export default function CreateDentistInput({
   errors: FieldErrors<DentistSchema>;
 }) {
   return (
-    <>
+    <div className='w-[70%]'>
       <div className='w-full flex flex-col gap-2'>
         <p className='text-base'>Name</p>
         <CustomTextField props={{ control, errors, label: 'name' }} />
@@ -33,6 +33,6 @@ export default function CreateDentistInput({
           props={{ control, errors, label: 'tel', page: 'createDentist' }}
         />
       </div>
-    </>
+    </div>
   );
 }

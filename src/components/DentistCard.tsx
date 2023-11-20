@@ -22,9 +22,8 @@ export default function DentistCard({
           <Image
             src={profilePic}
             alt='dentist-profile-pic'
-            layout='fill'
-            objectFit='cover'
-            className='rounded-full'
+            fill
+            className='rounded-full object-cover'
           ></Image>
         </div>
 

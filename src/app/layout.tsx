@@ -33,7 +33,7 @@ export default async function RootLayout({
   let user = null;
   let bookings = [];
   let myBooking = null;
-
+  console.log('session:', session);
   if (session) {
     const userProfile = await getUserProfile(session.user.token);
     const { _id, name, email, tel, role } = userProfile.data;
@@ -67,8 +67,10 @@ export default async function RootLayout({
     user = sessionUser;
     bookings = storeBookings;
   } else {
+    
     userStore.setState({ userProfile: null });
     useMyBookingStore.setState({ myBooking: null });
+    console.log("Can't get session")
   }
 
   const dentists = (await getDentists()).data;

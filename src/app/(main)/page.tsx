@@ -1,8 +1,11 @@
+'use client'
 import { Button, CircularProgress } from '@mui/material';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { Suspense } from 'react';
 
-export default async function Home() {
+export default function Home() {
+  const router = useRouter();
   return (
     <Suspense
       fallback={
@@ -11,7 +14,7 @@ export default async function Home() {
         </div>
       }
     >
-      <main className='flex flex-row items-center h-[92vh] w-[100vw]'>
+      <div className='flex flex-row items-center h-[92vh] w-[100vw]'>
         <div className='w-[50vw] h-[92vh]'>
           <div className='absolute bottom-0 left-0 bg-[#086CBD] h-[88vh] w-[42vw]'></div>
           <div className='absolute bottom-0 left-0 h-[92vh] w-[40vw]'>
@@ -31,12 +34,12 @@ export default async function Home() {
             <div className='text-sm font-normal'>
               "Your Journey to a Brighter, Healthier Smile Starts Here"
             </div>
-            <Button variant='contained' className='bg-sky-600 w-full py-2'>
+            <Button variant='contained' className='bg-sky-600 w-full py-2' onClick={()=>{router.push('/dentists')}}>
               Book now
             </Button>
           </div>
         </div>
-      </main>
+      </div>
     </Suspense>
   );
 }

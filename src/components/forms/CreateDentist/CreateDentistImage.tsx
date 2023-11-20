@@ -11,7 +11,7 @@ export default function CreateDentistImage({
   const mockImg = '/img/user.png';
   return (
     <>
-      <div className='relative w-[160px] h-[160px] self-center mt-5 p-2'>
+      <div className='relative w-[160px] h-[160px] mt-5 p-2'>
         <Image
           src={!!selectedImage ? URL.createObjectURL(selectedImage) : mockImg}
           alt='user'

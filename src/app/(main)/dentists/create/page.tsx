@@ -8,8 +8,8 @@ export default function CreateDentistPage() {
   if (session.role !== 'admin') return null;
 
   return (
-    <div className="mt-[8vh] bg-[url('/img/main-bg.png')] h-[120vh] bg-cover flex justify-center items-center">
+    <main className='bg-[#F3F3F3] h-fit flex justify-center items-center'>
       <CreateDentistForm token={session.token} />
-    </div>
+    </main>
   );
 }

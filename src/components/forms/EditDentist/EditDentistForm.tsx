@@ -84,8 +84,7 @@ export default function EditDentistForm({
 
   return (
     <form
-      className='w-[700px] h-[800px] flex flex-col gap-2 items-start justify-center 
-    bg-white rounded-lg pr-24 pl-24 pb-5 mt-10 mb-10 relative'
+      className='w-[700px] h-fit flex flex-col gap-4 items-center bg-white rounded-lg relative my-4 py-8'
       onSubmit={handleSubmit(formSubmit)}
     >
       <Status />
@@ -96,11 +95,7 @@ export default function EditDentistForm({
         defaultImage={picture}
       />
       <EditDentistInput control={control} errors={errors} />
-      <Button
-        type='submit'
-        variant='contained'
-        className='bg-sky-600 w-full mt-4'
-      >
+      <Button type='submit' variant='contained' className='bg-sky-600 w-[70%]'>
         Save Profile
       </Button>
     </form>
