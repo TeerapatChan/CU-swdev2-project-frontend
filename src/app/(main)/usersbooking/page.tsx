@@ -1,10 +1,13 @@
 'use client';
-import UserBooking from '@/components/cards/booking/UserBooking';
 import { BookingItem } from '@/utils/interface';
+import StoreInitializer from '@/zustand/StoreInitializer';
 import { useBookingsStore, userStore } from '@/zustand/store';
 import { CircularProgress } from '@mui/material';
+import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useState } from 'react';
-
+const UserBooking = dynamic(() => import('@/components/UserBooking'), {
+  ssr: false,
+});
 export default function UsersBooking() {
   const session = userStore((state) => state.userProfile);
   const bookings = useBookingsStore((state) => state.bookings);

@@ -5,7 +5,7 @@ import AddNewDentist from './AddNewDentist';
 import { userStore } from '@/zustand/store';
 import { DentistDetail } from '@/utils/interface';
 
-export default function DentistsLogin({
+export default async function DentistsLogin({
   dentists,
 }: {
   dentists: DentistDetail[] | undefined;

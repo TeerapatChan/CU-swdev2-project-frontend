@@ -1,10 +1,11 @@
-'use client';
+import { getServerSession } from 'next-auth/next';
 import MenuItem from './MenuItem';
+import getUserProfile from '@/libs/user/getUserProfile';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import MenuLogin from './MenuLogin';
-import { userStore } from '@/zustand/store';
 
-export default function MenuBar() {
-  const session = userStore((state) => state.userProfile);
+export default async function MenuBar() {
+  const session = await getServerSession(authOptions);
 
   //state to check if user is logged in use session
   //check user or admin
