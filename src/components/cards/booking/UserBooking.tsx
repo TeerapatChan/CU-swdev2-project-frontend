@@ -1,9 +1,9 @@
 'use client';
 import { useState } from 'react';
-import DateDentist from './DateDentist';
+import DateDentist from '../../DateDentist';
 import { Button } from '@mui/material';
 import updateBooking from '@/libs/bookings/updateBooking';
-import Status from './Status';
+import Status from '../../Status';
 import toast from 'react-hot-toast';
 import deleteBooking from '@/libs/bookings/deleteBooking';
 import { useMyBookingStore, useBookingsStore } from '@/zustand/store';
