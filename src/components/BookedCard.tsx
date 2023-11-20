@@ -1,8 +1,8 @@
 'use client';
 import { Button } from '@mui/material';
 import dayjs from 'dayjs';
-import BackIcon from '../../BackIcon';
-import EditDialog from '../../dialogs/edit/EditDialog';
+import BackIcon from './BackIcon';
+import EditDialog from './dialogs/edit/EditDialog';
 import { useRouter } from 'next/navigation';
 import {
   useMyBookingStore,

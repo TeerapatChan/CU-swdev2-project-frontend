@@ -1,7 +1,10 @@
-import BookedCard from '@/components/cards/booking/BookedCard';
+// import BookedCard from '@/components/BookedCard';
 import { CircularProgress } from '@mui/material';
+import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
-
+const BookedCard = dynamic(() => import('@/components/BookedCard'), {
+  ssr: false,
+});
 export default function MyBookingPage() {
   return (
     <Suspense

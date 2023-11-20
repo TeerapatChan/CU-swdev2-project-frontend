@@ -3,9 +3,9 @@ import { Suspense } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Status from '@/components/Status';
 import { userStore, useDentistStore } from '@/zustand/store';
-import DentistsLogin from '@/components/cards/dentists/DentistsLogin';
-import DentistCard from '@/components/cards/dentists/DentistCard';
-
+import dynamic from 'next/dynamic';
+const DentistCard = dynamic(() => import('@/components/DentistCard'));
+const DentistsLogin = dynamic(() => import('@/components/DentistsLogin'));
 
 export default function Dentists() {
   const dentists = useDentistStore((state) => state.dentists);
