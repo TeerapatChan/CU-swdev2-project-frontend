@@ -2,10 +2,11 @@
 import MenuItem from './MenuItem';
 import MenuLogin from './MenuLogin';
 import { userStore } from '@/zustand/store';
-
+import { usePathname } from 'next/navigation';
 export default function MenuBar() {
   const session = userStore((state) => state.userProfile);
-
+  const pathname = usePathname()
+  console.log(pathname)
   //state to check if user is logged in use session
   //check user or admin
   return (
@@ -14,22 +15,22 @@ export default function MenuBar() {
         SMILE CLINIC
       </div>
       <div className='flex flex-row'>
-        <MenuItem name='Home' refLink='/'></MenuItem>
+        <MenuItem name='Home' refLink='/' isCurrentPath={pathname=='/'}></MenuItem>
         {session ? (
           <MenuLogin></MenuLogin>
         ) : (
-          <MenuItem name='Booking' refLink='/dentists'></MenuItem>
+          <MenuItem name='Booking' refLink='/dentists' isCurrentPath={pathname=='/dentists'}></MenuItem>
         )}
-        <MenuItem name='My Booking' refLink='/mybooking'></MenuItem>
+        <MenuItem name='My Booking' refLink='/mybooking' isCurrentPath={pathname=='/mybooking'}></MenuItem>
       </div>
       {/* check login or logout */}
       {session ? (
         <div className='flex h-full '>
-          <MenuItem name='Log out' refLink='/signout'></MenuItem>
+          <MenuItem name='Log out' refLink='/signout' isCurrentPath={pathname=='/signout'}></MenuItem>
         </div>
       ) : (
         <div className='flex h-full '>
-          <MenuItem name='Log in' refLink='/signin'></MenuItem>
+          <MenuItem name='Log in' refLink='/signin' isCurrentPath={pathname=='/signin'}></MenuItem>
         </div>
       )}
     </div>

@@ -1,7 +1,7 @@
 import MenuBar from '@/components/menu/MenuBar';
 
 
-export default async function MainLayout({
+export default function MainLayout({
   children,
 }: {
   children: React.ReactNode;
