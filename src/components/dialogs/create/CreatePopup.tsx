@@ -25,10 +25,10 @@ export default function CreatePopup({
   var now = new Date();
   const [date, setDate] = useState<Date>(now);
   const [dentist, setDentist] = useState<string>(defaultDentist);
-  const success = () => toast.success('Appointment created');
-  const fail = () => toast.error('You can book only one appointment');
+  const success = () => toast.success('Booking created');
+  const fail = () => toast.error('You can book only one booking');
 
-  const makeAppointment = async () => {
+  const CreateBooking = async () => {
     try {
       const res = await createBooking({
         id: dentist ? dentist : '',
@@ -52,9 +52,7 @@ export default function CreatePopup({
     <Dialog open={open} onClose={onClose}>
       <Status />
       <div className='flex flex-col gap-5 pr-12 pl-12 pt-10 pb-10 w-[600px] items-center'>
-        <DialogTitle className='text-3xl font-bold'>
-          Make an appointment
-        </DialogTitle>
+        <DialogTitle className='text-3xl font-bold'>Make a booking</DialogTitle>
         <DateDentist
           onDateChange={(e) => setDate(e)}
           onDentistChange={(e) => setDentist(e)}
@@ -65,7 +63,7 @@ export default function CreatePopup({
           type='submit'
           variant='contained'
           className='bg-sky-600 w-full'
-          onClick={makeAppointment}
+          onClick={CreateBooking}
         >
           Submit
         </Button>

@@ -2,14 +2,13 @@
 import { Suspense } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Status from '@/components/Status';
-import { userStore, useDentistStore } from '@/zustand/store';
+import { useUserStore, useDentistStore } from '@/zustand/store';
 import DentistsLogin from '@/components/cards/dentists/DentistsLogin';
 import DentistCard from '@/components/cards/dentists/DentistCard';
 
-
 export default function Dentists() {
   const dentists = useDentistStore((state) => state.dentists);
-  const session = userStore((state) => state.userProfile);
+  const session = useUserStore((state) => state.userProfile);
   console.log('Dentists Component - dentists:', dentists);
   console.log('Dentists Component - session:', session);
   return (

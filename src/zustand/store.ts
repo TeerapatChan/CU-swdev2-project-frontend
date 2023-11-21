@@ -37,7 +37,7 @@ type BookingsStore = {
   setBookings: (bookings: BookingItem[] | []) => void;
 };
 
-export const userStore = create<UserStore>(
+export const useUserStore = create<UserStore>(
   persist(
     (set) => ({
       userProfile: null,

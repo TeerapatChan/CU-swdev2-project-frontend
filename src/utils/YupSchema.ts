@@ -7,7 +7,8 @@ const BookingYup = yup.object().shape({
   tel: yup
     .string()
     .required('Tel. is required')
-    .matches(PhoneRegex, 'Tel. is not valid'),
+    .matches(PhoneRegex, 'Tel. is not valid')
+    .length(10, 'Tel. must be exactly 10 digits'),
 });
 
 const SignupYup = yup.object().shape({
@@ -16,7 +17,8 @@ const SignupYup = yup.object().shape({
   tel: yup
     .string()
     .required('Tel. is required')
-    .matches(PhoneRegex, 'Tel. is not valid'),
+    .matches(PhoneRegex, 'Tel. is not valid')
+    .length(10, 'Tel. must be exactly 10 digits'),
   password: yup.string().required(),
 });
 

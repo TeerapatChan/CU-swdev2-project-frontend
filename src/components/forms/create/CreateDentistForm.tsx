@@ -8,7 +8,7 @@ import createDentist from '@/libs/dentists/createDentist';
 import { useState } from 'react';
 import CreateDentistInput from './CreateDentistInput';
 import CreateDentistImage from './CreateDentistImage';
-import { useEdgeStore } from '@/libs/edgestore';
+import { useEdgeStore } from '@/providers/edgestore';
 import Status from '@/components/Status';
 import toast from 'react-hot-toast';
 import BackIcon from '@/components/BackIcon';

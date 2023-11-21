@@ -21,7 +21,7 @@ export default function CreateDialog({
         className='bg-sky-600 w-full '
         onClick={handleOpen}
       >
-        Make an appointment
+        Make a booking
       </Button>
       <CreatePopup
         open={open}

@@ -1,14 +1,14 @@
 'use client';
 import UserBooking from '@/components/cards/booking/UserBooking';
 import { BookingItem } from '@/utils/interface';
-import { useBookingsStore, userStore } from '@/zustand/store';
+import { useBookingsStore, useUserStore } from '@/zustand/store';
 import { CircularProgress } from '@mui/material';
 import { Suspense, useEffect, useState } from 'react';
 
 export default function UsersBooking() {
-  const session = userStore((state) => state.userProfile);
+  const session = useUserStore((state) => state.userProfile);
   const bookings = useBookingsStore((state) => state.bookings);
-  if (!session || !session.token) return (null);
+  if (!session || !session.token) return null;
   if (bookings.length == 0)
     return (
       <div className='bg-[#F3F3F3] h-[92vh] bg-cover flex justify-center items-center'>

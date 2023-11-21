@@ -4,11 +4,11 @@ import './globals.css';
 import NextAuthProvider from '@/providers/NextAuthProvider';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './api/auth/[...nextauth]/route';
-import { EdgeStoreProvider } from '../libs/edgestore';
+import { EdgeStoreProvider } from '../providers/edgestore';
 import getUserProfile from '@/libs/user/getUserProfile';
 import StoreInitializer from '@/zustand/StoreInitializer';
 import {
-  userStore,
+  useUserStore,
   useDentistStore,
   useMyBookingStore,
   useBookingsStore,
@@ -54,7 +54,7 @@ export default async function RootLayout({
       };
       return newBooking;
     });
-    userStore.setState({ userProfile: sessionUser });
+    useUserStore.setState({ userProfile: sessionUser });
     useBookingsStore.setState({ bookings: storeBookings });
 
     const adminRole = role === 'admin';
@@ -67,10 +67,9 @@ export default async function RootLayout({
     user = sessionUser;
     bookings = storeBookings;
   } else {
-    
-    userStore.setState({ userProfile: null });
+    useUserStore.setState({ userProfile: null });
     useMyBookingStore.setState({ myBooking: null });
-    console.log("Can't get session")
+    console.log("Can't get session");
   }
 
   const dentists = (await getDentists()).data;

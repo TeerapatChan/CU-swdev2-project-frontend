@@ -6,7 +6,7 @@ import EditDialog from '../../dialogs/edit/EditDialog';
 import { useRouter } from 'next/navigation';
 import {
   useMyBookingStore,
-  userStore,
+  useUserStore,
   useDentistStore,
   useBookingsStore,
 } from '@/zustand/store';
@@ -16,7 +16,7 @@ import { BookingItem } from '@/utils/interface';
 import getBookings from '@/libs/bookings/getBookings';
 
 export default function BookedCard() {
-  const session = userStore((state) => state.userProfile);
+  const session = useUserStore((state) => state.userProfile);
   const router = useRouter();
   if (!session || !session.token)
     return (
@@ -35,10 +35,10 @@ export default function BookedCard() {
   }
 
   const dentists = useDentistStore((state) => state.dentists);
-  const success = () => toast.success('Appointment Deleted');
-  const fail = () => toast.error('Failed to delete appointment');
+  const success = () => toast.success('Booking Deleted');
+  const fail = () => toast.error('Failed to delete booking');
 
-  const deleteAppointment = async () => {
+  const DeleteBooking = async () => {
     try {
       const res = await deleteBooking({
         id: myBooking._id,
@@ -79,7 +79,7 @@ export default function BookedCard() {
   return (
     <div className='relative flex flex-col justify-center items-center bg-white w-[800px] h-[450px] shadow-lg rounded-2xl gap-4'>
       <BackIcon />
-      <p className='font-semibold text-4xl'>Your appointment</p>
+      <p className='font-semibold text-4xl'>Your Booking</p>
       <div className='flex flex-col w-[550px] h-fit gap-4 pt-10 text-xl'>
         <div className='flex flex-row justify-between'>
           <p className='text-[#777777]'>Name</p>
@@ -114,7 +114,7 @@ export default function BookedCard() {
             variant='outlined'
             color='error'
             className='w-full p-2 border-2'
-            onClick={deleteAppointment}
+            onClick={DeleteBooking}
           >
             Delete
           </Button>

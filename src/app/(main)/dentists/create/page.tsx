@@ -1,9 +1,9 @@
 'use client';
-import CreateDentistForm from '@/components/forms/CreateDentist/CreateDentistForm';
-import { userStore } from '@/zustand/store';
+import CreateDentistForm from '@/components/forms/create/CreateDentistForm';
+import { useUserStore } from '@/zustand/store';
 
 export default function CreateDentistPage() {
-  const session = userStore((state) => state.userProfile);
+  const session = useUserStore((state) => state.userProfile);
   if (!session || !session.token) return null;
   if (session.role !== 'admin') return null;
 

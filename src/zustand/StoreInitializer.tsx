@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import {
-  userStore,
+  useUserStore,
   useDentistStore,
   useMyBookingStore,
   useBookingsStore,
@@ -15,7 +15,7 @@ export default function StoreInitializer(storeProps: any) {
   useEffect(() => {
     if (!initialized.current) {
       if (storeProps.userProfile)
-        userStore.setState({ userProfile: { ...storeProps.userProfile } });
+        useUserStore.setState({ userProfile: { ...storeProps.userProfile } });
       if (storeProps.dentists)
         useDentistStore.setState({ dentists: storeProps.dentists });
       if (storeProps.myBooking)

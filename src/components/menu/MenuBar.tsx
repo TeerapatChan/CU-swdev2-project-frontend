@@ -1,7 +1,7 @@
 'use client';
 import MenuItem from './MenuItem';
 import MenuLogin from './MenuLogin';
-import { userStore } from '@/zustand/store';
+import { useUserStore } from '@/zustand/store';
 import { usePathname } from 'next/navigation';
 import IconButton from '@mui/material/IconButton';
 import { useEffect, useState } from 'react';
@@ -12,9 +12,9 @@ const MenuIcon = dynamic(() => import('@mui/icons-material/Menu'), {
 });
 
 export default function MenuBar() {
-  const session = userStore((state) => state.userProfile);
-  const pathname = usePathname()
-  console.log(pathname)
+  const session = useUserStore((state) => state.userProfile);
+  const pathname = usePathname();
+  console.log(pathname);
   const [isOpenDropDown, setIsOpenDropDown] = useState(false);
   const [windowWidth, setWindowWidth] = useState(1024);
   const handleWindowResize = () => {
@@ -99,5 +99,3 @@ export default function MenuBar() {
     </div>
   );
 }
-
-

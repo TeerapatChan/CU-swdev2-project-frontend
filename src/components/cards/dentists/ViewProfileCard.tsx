@@ -48,7 +48,7 @@ export default function ViewProfileCard({
             {dentistDetail.address}
           </p>
           <p className='line-clamp-1 font-thin text-[#777777] text-center'>
-            Please access your account to schedule an appointment
+            Please access your account to schedule an booking
           </p>
         </div>
       </div>

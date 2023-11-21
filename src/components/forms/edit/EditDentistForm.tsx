@@ -7,7 +7,7 @@ import { DentistYup } from '@/utils/YupSchema';
 import { useState } from 'react';
 import EditDentistInput from './EditDentistInput';
 import EditDentistImage from './EditDentistImage';
-import { useEdgeStore } from '@/libs/edgestore';
+import { useEdgeStore } from '@/providers/edgestore';
 import updateDentist from '@/libs/dentists/updateDentist';
 import toast from 'react-hot-toast';
 import Status from '@/components/Status';

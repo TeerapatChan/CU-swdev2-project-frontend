@@ -28,7 +28,7 @@ export default function DateDentist({
   return (
     <>
       <div className='w-full flex flex-row gap-10 justify-between mb-2'>
-        <p className='self-center w-6/12'>Appointment Date</p>
+        <p className='self-center w-6/12'>Booking Date</p>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             label='DD/MM/YYYY'

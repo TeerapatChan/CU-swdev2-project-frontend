@@ -1,7 +1,7 @@
 'use client';
-import EditDentistForm from '@/components/forms/EditDentist/EditDentistForm';
+import EditDentistForm from '@/components/forms/edit/EditDentistForm';
 import getDentist from '@/libs/dentists/getDentist';
-import { userStore, useDentistStore } from '@/zustand/store';
+import { useUserStore } from '@/zustand/store';
 import { useEffect, useState } from 'react';
 import { DentistDetail } from '@/utils/interface';
 
@@ -10,7 +10,7 @@ export default function EditDentistPage({
 }: {
   params: { id: string };
 }) {
-  const session = userStore((state) => state.userProfile);
+  const session = useUserStore((state) => state.userProfile);
   const [dentist, setDentist] = useState<DentistDetail>();
   if (!session || !session.token) return null;
   if (session.role !== 'admin') return null;
