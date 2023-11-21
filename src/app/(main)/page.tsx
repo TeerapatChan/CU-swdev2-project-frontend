@@ -21,7 +21,7 @@ export default function Home() {
             <Image
               src='/img/cover.png'
               alt='page-cover'
-              layout='fill'
+              fill
               objectFit='cover'
             ></Image>
           </div>
