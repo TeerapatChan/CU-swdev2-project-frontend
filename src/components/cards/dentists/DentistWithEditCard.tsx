@@ -4,12 +4,9 @@ import { Button } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import deleteDentist from '@/libs/dentists/deleteDentist';
 import toast from 'react-hot-toast';
-import dynamic from 'next/dynamic';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useDentistStore } from '@/zustand/store';
 
-const DeleteIcon = dynamic(() => import('@mui/icons-material/Delete'), {
-  ssr: false,
-});
 export default function DentistWithEditCard({
   profilePic,
   name,
@@ -25,7 +22,7 @@ export default function DentistWithEditCard({
 }) {
   const router = useRouter();
 
-  const deleteFunction = async () => {
+  const deleteDentistHandler= async () => {
     try {
       const res = await deleteDentist({ id: id, token: token });
       const dentists = useDentistStore.getState().dentists;
@@ -52,7 +49,7 @@ export default function DentistWithEditCard({
     <div className='flex flex-col h-[320px] w-[320px] justify-center items-center shadow-md rounded-lg bg-white gap-2'>
       <button
         className='relative w-full h-fit bottom-5'
-        onClick={deleteFunction}
+        onClick={deleteDentistHandler}
       >
         <DeleteIcon className='absolute right-4 top-0 text-3xl' />
       </button>
