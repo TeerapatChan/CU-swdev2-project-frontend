@@ -54,26 +54,26 @@ export default async function RootLayout({
       };
       return newBooking;
     });
-    useUserStore.setState({ userProfile: sessionUser });
-    useBookingsStore.setState({ bookings: storeBookings });
+    useUserStore.getState().setUserProfile(sessionUser);
+    useBookingsStore.getState().setBookings(storeBookings);
 
     const adminRole = role === 'admin';
     const selectedBooking = adminRole
       ? storeBookings.find((booking: BookingItem) => booking.user._id === _id)
       : storeBookings[0];
-    useMyBookingStore.setState({ myBooking: selectedBooking });
+    useMyBookingStore.getState().setMyBooking(selectedBooking);
     myBooking = selectedBooking;
 
     user = sessionUser;
     bookings = storeBookings;
   } else {
-    useUserStore.setState({ userProfile: null });
-    useMyBookingStore.setState({ myBooking: null });
+    useUserStore.getState().setUserProfile(null);
+    useMyBookingStore.getState().setMyBooking(null);
     console.log("Can't get session");
   }
 
   const dentists = (await getDentists()).data;
-  useDentistStore.setState({ dentists });
+  useDentistStore.getState().setDentists(dentists);
 
   return (
     <html lang='en'>

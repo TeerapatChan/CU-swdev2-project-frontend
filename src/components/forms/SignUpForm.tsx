@@ -34,7 +34,7 @@ export default function SignUpForm() {
         tel: data.tel,
         password: data.password,
       });
-      router.push('/auth/signin');
+      router.push('/signin');
     } catch (error) {
       console.log(error);
     }

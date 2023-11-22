@@ -7,7 +7,6 @@ import { BookingItem, dentistsProps } from '@/utils/interface';
 import Status from '../../Status';
 import toast from 'react-hot-toast';
 import updateBooking from '@/libs/bookings/updateBooking';
-import { useRouter } from 'next/navigation';
 import { useBookingsStore, useMyBookingStore } from '@/zustand/store';
 import getBookings from '@/libs/bookings/getBookings';
 
@@ -51,12 +50,12 @@ export default function CreatePopup({
             },
           };
           if (newBooking._id === bookingID) {
-            useMyBookingStore.setState({ myBooking: newBooking });
+            useMyBookingStore.getState().setMyBooking(newBooking);
           }
           return newBooking;
         },
       );
-      useBookingsStore.setState({ bookings: bookings });
+      useBookingsStore.getState().setBookings(bookings);
       success();
     } catch (error) {
       fail();

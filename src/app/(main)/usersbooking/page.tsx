@@ -3,7 +3,7 @@ import UserBooking from '@/components/cards/booking/UserBooking';
 import { BookingItem } from '@/utils/interface';
 import { useBookingsStore, useUserStore } from '@/zustand/store';
 import { CircularProgress } from '@mui/material';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense } from 'react';
 
 export default function UsersBooking() {
   const session = useUserStore((state) => state.userProfile);

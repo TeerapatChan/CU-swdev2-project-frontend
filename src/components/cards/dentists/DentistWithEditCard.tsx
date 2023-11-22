@@ -21,13 +21,10 @@ export default function DentistWithEditCard({
   token: string;
 }) {
   const router = useRouter();
-
-  const deleteDentistHandler= async () => {
+  const deleteDentistHandler = async () => {
     try {
       const res = await deleteDentist({ id: id, token: token });
-      const dentists = useDentistStore.getState().dentists;
-      const newDentists = dentists.filter((dentist) => dentist.id !== id);
-      useDentistStore.setState({ dentists: newDentists });
+      useDentistStore.getState().deleteDentist(id);
       toast.success(`Dentist: ${name} Deleted`);
       router.refresh();
     } catch (err) {
@@ -53,7 +50,7 @@ export default function DentistWithEditCard({
       >
         <DeleteIcon className='absolute right-4 top-0 text-3xl' />
       </button>
-      <div className='w-1/3 h-1/3 relative'>
+      <div className='w-[40%] h-[40%] relative'>
         <Image
           src={profilePic}
           alt='dentist-profile-pic'

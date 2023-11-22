@@ -15,6 +15,9 @@ type UserStore = {
 type DentistStore = {
   dentists: DentistDetail[] | [];
   setDentists: (dentists: DentistDetail[] | []) => void;
+  updateDentist: (dentist: DentistDetail) => void;
+  deleteDentist: (id: string) => void;
+  createDentist: (dentist: DentistDetail) => void;
 };
 
 type myBooking = {
@@ -30,6 +33,11 @@ type myBooking = {
 type MyBookingStore = {
   myBooking: myBooking | null;
   setMyBooking: (myBookings: myBooking | null) => void;
+  updateMyBooking: (params: {
+    dentistID: string;
+    dentistName: string;
+    bookingDate: Date;
+  }) => void;
 };
 
 type BookingsStore = {
@@ -54,6 +62,30 @@ export const useDentistStore = create<DentistStore>(
     (set) => ({
       dentists: [],
       setDentists: (dentists: DentistDetail[] | null) => set({ dentists }),
+      deleteDentist: (id: string) => {
+        set((state: any) => {
+          const dentists = state.dentists.filter(
+            (dentist: DentistDetail) => dentist.id !== id,
+          );
+          return { dentists };
+        });
+      },
+      createDentist: (dentist: DentistDetail) => {
+        set((state: any) => {
+          return { dentists: [...state.dentists, dentist] };
+        });
+      },
+      updateDentist: (dentist: DentistDetail) => {
+        set((state: any) => {
+          const dentists = state.dentists.map((dentistItem: DentistDetail) => {
+            if (dentistItem.id === dentist.id) {
+              return dentist;
+            }
+            return dentistItem;
+          });
+          return { dentists };
+        });
+      },
     }),
     {
       name: 'dentist-storage',
@@ -66,6 +98,21 @@ export const useMyBookingStore = create<MyBookingStore>(
     (set) => ({
       myBooking: null,
       setMyBooking: (myBooking: myBooking | null) => set({ myBooking }),
+      updateMyBooking: (params: {
+        dentistID: string;
+        dentistName: string;
+        bookingDate: Date;
+      }) => {
+        set((state: any) => {
+          const myBooking = state.myBooking;
+          if (myBooking) {
+            myBooking.bookingDate = params.bookingDate;
+            myBooking.dentist._id = params.dentistID;
+            myBooking.dentist.name = params.dentistName;
+          }
+          return { myBooking };
+        });
+      },
     }),
     {
       name: 'myBooking-storage',
@@ -78,17 +125,6 @@ export const useBookingsStore = create<BookingsStore>(
     (set) => ({
       bookings: [],
       setBookings: (bookings: BookingItem[]) => set({ bookings }),
-      updateBookings: (booking: BookingItem) => {
-        set((state: any) => {
-          const bookings = state.bookings.map((b: BookingItem) => {
-            if (b._id === booking._id) {
-              return booking;
-            }
-            return b;
-          });
-          return { bookings };
-        });
-      },
     }),
     {
       name: 'bookings-storage',

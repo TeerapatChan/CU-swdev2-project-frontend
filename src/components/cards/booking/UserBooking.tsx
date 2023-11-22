@@ -52,12 +52,12 @@ export default function UserBooking(props: UserBookingProps) {
             },
           };
           if (newBooking._id === id) {
-            useMyBookingStore.setState({ myBooking: newBooking });
+            useMyBookingStore.getState().setMyBooking(newBooking);
           }
           return newBooking;
         },
       );
-      useBookingsStore.setState({ bookings: bookings });
+      useBookingsStore.getState().setBookings(bookings);
       updateSuccess();
     } catch {
       updateFail();
@@ -90,8 +90,8 @@ export default function UserBooking(props: UserBookingProps) {
           return newBooking;
         },
       );
-      if (!found) useMyBookingStore.setState({ myBooking: null });
-      useBookingsStore.setState({ bookings: bookings });
+      if (!found) useMyBookingStore.getState().setMyBooking(null);
+      useBookingsStore.getState().setBookings(bookings);
       deleteSuccess();
     } catch {
       deleteFail();

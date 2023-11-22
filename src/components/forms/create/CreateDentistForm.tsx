@@ -13,7 +13,6 @@ import Status from '@/components/Status';
 import toast from 'react-hot-toast';
 import BackIcon from '@/components/BackIcon';
 import { useDentistStore } from '@/zustand/store';
-import getDentists from '@/libs/dentists/getDentists';
 
 export default function CreateDentistForm({ token }: { token: string }) {
   const [selectedImage, setSelectedImage] = useState<File>();
@@ -46,6 +45,7 @@ export default function CreateDentistForm({ token }: { token: string }) {
         });
         url = res.url;
       }
+
       const res = await createDentist({
         name: data.name,
         tel: data.tel,
@@ -55,6 +55,16 @@ export default function CreateDentistForm({ token }: { token: string }) {
         picture: url,
         token: token,
       });
+
+      const newDentist = {
+        id: res.data.id,
+        name: data.name,
+        tel: data.tel,
+        hospital: data.hospital,
+        address: data.address,
+        expertist: data.expertist,
+        picture: url,
+      };
       success();
       reset({
         name: '',
@@ -64,8 +74,7 @@ export default function CreateDentistForm({ token }: { token: string }) {
         expertist: '',
       });
       setSelectedImage(undefined);
-      const dentists = (await getDentists()).data;
-      useDentistStore.setState({ dentists: dentists });
+      useDentistStore.getState().createDentist(newDentist);
     } catch (error) {
       fail();
       console.log(error);

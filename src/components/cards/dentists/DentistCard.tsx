@@ -16,9 +16,9 @@ export default function DentistCard({
     <Link href={`/dentists/${id}`}>
       <button
         className='flex flex-col h-[320px] w-[320px] justify-center items-center shadow-md 
-    rounded-lg gap-4 bg-white hover:shadow-xl'
+    rounded-lg bg-white hover:shadow-xl'
       >
-        <div className='w-1/3 h-1/3 relative'>
+        <div className='w-[40%] h-[40%] relative'>
           <Image
             src={profilePic}
             alt='dentist-profile-pic'

@@ -12,7 +12,7 @@ import updateDentist from '@/libs/dentists/updateDentist';
 import toast from 'react-hot-toast';
 import Status from '@/components/Status';
 import BackIcon from '@/components/BackIcon';
-import { useDentistStore } from '@/zustand/store';
+import { useDentistStore, useMyBookingStore } from '@/zustand/store';
 
 export default function EditDentistForm({
   defaultValues,
@@ -63,18 +63,25 @@ export default function EditDentistForm({
         picture: picture,
         token: token,
       });
-      const editDentist = useDentistStore.getState().dentists.map((dentist) => {
-        if (dentist.id === id) {
-          dentist.name = data.name;
-          dentist.tel = data.tel;
-          dentist.hospital = data.hospital;
-          dentist.address = data.address;
-          dentist.expertist = data.expertist;
-          dentist.picture = picture;
-        }
-        return dentist;
-      });
-      useDentistStore.setState({ dentists: editDentist });
+      const updatedData = {
+        id: id,
+        name: data.name,
+        tel: data.tel,
+        hospital: data.hospital,
+        address: data.address,
+        expertist: data.expertist,
+        picture: picture,
+      };
+      const myBooking = useMyBookingStore.getState().myBooking;
+
+      useDentistStore.getState().updateDentist(updatedData);
+      if (myBooking && myBooking.dentist._id === id) {
+        useMyBookingStore.getState().updateMyBooking({
+          dentistID: id,
+          dentistName: updatedData.name,
+          bookingDate: myBooking.bookingDate,
+        });
+      }
       success();
     } catch (error) {
       fail();

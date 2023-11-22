@@ -10,7 +10,7 @@ export default function EditDentistInput({
   errors: FieldErrors<DentistSchema>;
 }) {
   return (
-    <div className='w-[70%]'>
+    <div className='w-[70%] flex flex-col gap-2 mb-2'>
       <div className='w-full flex flex-col gap-2'>
         <p className='text-base'>Name</p>
         <CustomTextField props={{ control, errors, label: 'name' }} />

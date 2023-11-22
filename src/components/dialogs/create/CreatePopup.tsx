@@ -36,11 +36,11 @@ export default function CreatePopup({
         token: token,
       });
       const bookings = (await getBookings(token)).data;
-      useBookingsStore.setState({ bookings: bookings });
+      useBookingsStore.getState().setBookings(bookings);
       const myBooking = bookings.filter(
         (booking: BookingItem) => booking._id === res.data._id,
       );
-      useMyBookingStore.setState({ myBooking: myBooking[0] });
+      useMyBookingStore.getState().setMyBooking(myBooking[0]);
       success();
     } catch (error) {
       fail();

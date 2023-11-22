@@ -42,6 +42,7 @@ export default function DateDentist({
                 onDateChange(e);
               }
             }}
+            disablePast
           />
         </LocalizationProvider>
       </div>

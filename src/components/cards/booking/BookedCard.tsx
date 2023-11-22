@@ -64,12 +64,12 @@ export default function BookedCard() {
           return newBooking;
         },
       );
-      useBookingsStore.setState({ bookings: bookings });
+      useBookingsStore.getState().setBookings(bookings);
       router.push('/dentists');
       success();
       setTimeout(() => {
-        if (!found) useMyBookingStore.setState({ myBooking: null });
-      }, 1000);
+        if (!found) useMyBookingStore.getState().setMyBooking(null);
+      }, 500);
     } catch (error) {
       fail();
       console.log(error);

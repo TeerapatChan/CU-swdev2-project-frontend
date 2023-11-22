@@ -15,13 +15,13 @@ export default function StoreInitializer(storeProps: any) {
   useEffect(() => {
     if (!initialized.current) {
       if (storeProps.userProfile)
-        useUserStore.setState({ userProfile: { ...storeProps.userProfile } });
+        useUserStore.getState().setUserProfile(storeProps.userProfile);
       if (storeProps.dentists)
-        useDentistStore.setState({ dentists: storeProps.dentists });
+        useDentistStore.getState().setDentists(storeProps.dentists);
       if (storeProps.myBooking)
-        useMyBookingStore.setState({ myBooking: storeProps.myBooking });
+        useMyBookingStore.getState().setMyBooking(storeProps.myBooking);
       if (storeProps.bookings)
-        useBookingsStore.setState({ bookings: storeProps.bookings });
+        useBookingsStore.getState().setBookings(storeProps.bookings);
       initialized.current = true;
     }
   }, [
