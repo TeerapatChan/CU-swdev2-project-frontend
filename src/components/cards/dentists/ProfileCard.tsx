@@ -25,6 +25,7 @@ export default function ProfileCard({ params }: { params: { id: string } }) {
           alt='dentist-profile-pic'
           fill
           className='rounded-full object-cover'
+          loading='lazy'
         ></Image>
       </div>
       <div className='text-3xl font-semibold'>{dentistDetail.name}</div>

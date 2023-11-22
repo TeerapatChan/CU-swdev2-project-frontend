@@ -23,6 +23,7 @@ export default function Home() {
               alt='page-cover'
               fill
               objectFit='cover'
+              loading='lazy'
             ></Image>
           </div>
         </div>

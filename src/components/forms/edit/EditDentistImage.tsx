@@ -20,6 +20,7 @@ export default function EditDentistImage({
           alt='user'
           layout='fill'
           className='rounded-full'
+          loading='lazy'
         ></Image>
         <div className='absolute bottom-2 right-4'>
           <label htmlFor='fileInput'>

@@ -56,6 +56,7 @@ export default function DentistWithEditCard({
           alt='dentist-profile-pic'
           fill
           className='rounded-full object-cover'
+          loading='lazy'
         ></Image>
       </div>
 

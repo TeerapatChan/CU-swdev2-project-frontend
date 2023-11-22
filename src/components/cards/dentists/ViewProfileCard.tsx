@@ -25,6 +25,7 @@ export default function ViewProfileCard({
           alt='dentist-profile-pic'
           fill
           className='rounded-full object-cover'
+          loading='lazy'
         ></Image>
       </div>
       <div className='text-2xl font-semibold'>{dentistDetail.name}</div>

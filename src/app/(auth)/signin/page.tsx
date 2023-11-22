@@ -26,6 +26,7 @@ export default function SignInPage() {
                 objectFit='cover'
                 alt='sign-up'
                 className='rounded-r-xl'
+                loading='lazy'
               ></Image>
             </div>
           </div>

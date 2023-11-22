@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import Image from 'next/image';
 import SignUpForm from '@/components/forms/SignUpForm';
 
@@ -25,6 +25,7 @@ export default function SignUpPage() {
               objectFit='cover'
               alt='sign-up'
               className='rounded-r-xl'
+              loading='lazy'
             ></Image>
           </div>
         </div>
