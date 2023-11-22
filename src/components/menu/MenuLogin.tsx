@@ -11,7 +11,7 @@ export default function MenuLogin() {
     <div className='flex flex-row'>
       {/* check admin */}
       {profile.role == 'admin' ? (
-        <div className='flex flex-row'>
+        <div className='flex md:flex-row flex-col'>
           <MenuItem
             name='Dentists'
             refLink='/dentists'
