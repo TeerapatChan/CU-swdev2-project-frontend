@@ -1,5 +1,7 @@
-'use client';
+import { getServerSession } from 'next-auth/next';
 import MenuItem from './MenuItem';
+import getUserProfile from '@/libs/user/getUserProfile';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import MenuLogin from './MenuLogin';
 import { userStore } from '@/zustand/store';
 import { usePathname } from 'next/navigation';

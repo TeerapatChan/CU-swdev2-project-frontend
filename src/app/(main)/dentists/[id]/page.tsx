@@ -1,6 +1,6 @@
 'use client';
-import ProfileCard from '@/components/cards/dentists/ProfileCard';
-import ViewProfileCard from '@/components/cards/dentists/ViewProfileCard';
+import ProfileCard from '@/components/ProfileCard';
+import ViewProfileCard from '@/components/ViewProfileCard';
 import { userStore } from '@/zustand/store';
 
 export default function dentistProfile({

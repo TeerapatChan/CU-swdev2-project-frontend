@@ -1,4 +1,4 @@
-import MenuBar from '@/components/menu/MenuBar';
+import MenuBar from '@/components/MenuBar';
 
 
 export default function MainLayout({

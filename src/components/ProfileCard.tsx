@@ -1,10 +1,10 @@
 'use client';
 import Image from 'next/image';
-import CreateDialog from '../../dialogs/create/CreateDialog';
-import BackIcon from '../../BackIcon';
+import CreateDialog from './dialogs/create/CreateDialog';
+import BackIcon from './BackIcon';
 import { useDentistStore } from '@/zustand/store';
 
-export default function ProfileCard({
+export default async function ProfileCard({
   params,
   token,
 }: {
