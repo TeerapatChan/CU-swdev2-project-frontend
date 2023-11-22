@@ -11,7 +11,7 @@ return (
   <div className='flex flex-row'>
     {/* check admin */}
     {profile.role == 'admin' ? (
-      <div className='flex flex-row'>
+      <div className='flex md:flex-row flex-colf'>
         <MenuItem name='Dentists' refLink='/dentists' isCurrentPath={pathname=='/dentists'}></MenuItem>
         <MenuItem name='Users Booking' refLink='/usersbooking' isCurrentPath={pathname=='/usersbooking'}></MenuItem>
       </div>
